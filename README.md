@@ -1,4 +1,4 @@
-# OneTrack Financial Management App
+# OneTrack
 
 ## Project Idea
 
