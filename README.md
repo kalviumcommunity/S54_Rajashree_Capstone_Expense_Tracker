@@ -1,8 +1,8 @@
-# OneTrack
+# CashTrackrr
 
 ## Project Idea
 
-OneTrack is a versatile financial management app designed to streamline both personal and business expenses. With distinct modes tailored for individual and professional use, the app aims to offer a seamless and intuitive experience for users to manage their budgets, transactions, and financial goals.
+CashTrackrr is a versatile financial management app designed to streamline both personal and business expenses. With distinct modes tailored for individual and professional use, the app aims to offer a seamless and intuitive experience for users to manage their budgets, transactions, and financial goals.
 
 ## Features
 
@@ -22,18 +22,18 @@ OneTrack is a versatile financial management app designed to streamline both per
 
 ### Additional Feature:
 
-- **User-Generated Data:** OneTrack empowers users to input their own financial data, providing a personalized touch to their expense tracking. Users can tailor the app to their specific needs, enhancing its adaptability.
+- **User-Generated Data:** CashTrackrr empowers users to input their own financial data, providing a personalized touch to their expense tracking. Users can tailor the app to their specific needs, enhancing its adaptability.
 
-## Why OneTrack:
+## Why CashTrackrr:
 
-- **User-Friendly Interface:** OneTrack offers an intuitive interface for easy navigation, ensuring accessibility for users of all backgrounds.
-- **Comprehensive Solution:** Whether managing personal finances or overseeing business transactions, OneTrack provides an all-encompassing solution.
-- **Data Security:** With robust security measures, users can trust OneTrack to keep their financial information safe and confidential.
-- **Versatility:** OneTrack adapts to individual preferences, allowing users to add their own data and tailor the app to their unique financial needs.
+- **User-Friendly Interface:** CashTrackrr offers an intuitive interface for easy navigation, ensuring accessibility for users of all backgrounds.
+- **Comprehensive Solution:** Whether managing personal finances or overseeing business transactions, CashTrackrr provides an all-encompassing solution.
+- **Data Security:** With robust security measures, users can trust CashTrackrr to keep their financial information safe and confidential.
+- **Versatility:** CashTrackrr adapts to individual preferences, allowing users to add their own data and tailor the app to their unique financial needs.
 
 ## Target Audience:
 
-OneTrack caters to individuals seeking a comprehensive yet user-friendly solution to manage both personal and business expenses. It is suitable for freelancers, small business owners, and anyone looking to simplify their financial tracking.
+CashTrackrr caters to individuals seeking a comprehensive yet user-friendly solution to manage both personal and business expenses. It is suitable for freelancers, small business owners, and anyone looking to simplify their financial tracking.
 
 
 ## Deployed link:
