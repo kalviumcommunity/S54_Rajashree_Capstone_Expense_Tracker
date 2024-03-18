@@ -15,7 +15,7 @@ h1{
 
 #root {
   margin: auto;
-  padding: 2rem;
+  /* padding: 2rem; */
 }
 
 p,button{
@@ -24,4 +24,7 @@ p,button{
   font-weight: 100;
 }
 
+h4{
+  color: #FF7545;
+}
 

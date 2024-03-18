@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '../../assets/Cashtrackrr-logo.png'
 const Navbar = () => {
   return (
-<div className="navbar bg-base-100" style={{padding:"0 70px"}}>
+<div className="navbar bg-base-100 mt-10" style={{padding:"0 70px"}}>
   <div className="navbar-start">
     <div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -24,7 +24,7 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end">
-    <a className="btn bg-transparent border border-black w-26" style={{borderWidth:"3px"}}>L O G I N</a>
+    <a className="btn bg-transparent border border-black w-26" style={{borderWidth:"3px",   fontFamily: "'Itim', sans-serif"}}>L O G I N</a>
   </div>
 </div>
   );
