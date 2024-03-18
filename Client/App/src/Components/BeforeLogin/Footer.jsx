@@ -39,7 +39,7 @@ const Footer = () => {
               </div>
     
               <div className="join">
-                <button type="submit" className="btn join-item mt-4 bg-transparent" style={{border:"2px solid #FF7545", color:"#FF7545" }}>Register Complain</button>
+                <button type="submit" className="btn join-item mt-4 bg-transparent" style={{border:"2px solid #FF7545", color:"#FF7545" }}>Register Complaint</button>
               </div>
             </fieldset>
           </form>
