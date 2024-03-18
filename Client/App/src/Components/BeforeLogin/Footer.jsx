@@ -3,8 +3,8 @@ import logo from '../../assets/Cashtrackrr-logo.png'
 
 const Footer = () => {
   return (
-<div className='items-center'>
-    <footer className=" flex justify-evenly footer p-10 bg-base-300 border-t text-base-content">
+<div className='items-center text-black'>
+    <footer className=" flex justify-evenly footer p-10 bg-[#E0E0E0] border-t">
     <aside>
     <img src={logo} className='w-52'></img>
     <p className='w-44'>Take control of your finances with CashTrackrr, the all-in-one solution for effortless financial management.</p>
@@ -24,18 +24,18 @@ const Footer = () => {
     <form action="mailto:rajashreeguha@outlook.com" method="post" enctype="text/plain">
             <h4 className="footer-title">Drop a complaint</h4> 
             <fieldset className="form-control w-80">
-              <label className="label">
-                <span className="label-text">Enter complaint reason</span>
+              <label className="label text-black">
+                <span className="label-text text-black">Enter complaint reason</span>
               </label> 
               <div className="join">
-                <input type="text" name="Reason for complaint" placeholder="Enter complaint reason" className="input input-bordered join-item" required /> 
+                <input type="text" name="Reason for complaint" placeholder="Enter complaint reason" className="input input-bordered join-item bg-white" required /> 
               </div>
 
-              <label className="label">
-                <span className="label-text">Please provide any details</span>
+              <label className="label text-black">
+                <span className="label-text text-black">Please provide any details</span>
               </label> 
               <div className="join">
-                <input type="text" name="Details" placeholder="Enter details" className="input input-bordered join-item" required /> 
+                <input type="text" name="Details" placeholder="Enter details" className="input input-bordered join-item bg-white" required /> 
               </div>
     
               <div className="join">
@@ -44,7 +44,7 @@ const Footer = () => {
             </fieldset>
           </form>
   </footer>
-  <footer className="footer px-24 py-4 border-t text-base-content border-base-300">
+  <footer className="footer px-24 py-4 border-t border-grey-300">
   <aside className="items-center grid-flow-col">
     <h5>Made by Rajashree</h5>
   </aside> 

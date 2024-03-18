@@ -4,7 +4,7 @@ import homeBg from '../../assets/home_page_expense.webp';
 const Landingpage = () => {
   return (
     <div>
-    <div className="flex flex-col md:flex-row items-center justify-evenly" >
+    <div className="flex flex-col md:flex-row items-center justify-evenly text-black" >
       <div className="md:w-1/2 p-20 ">
         <h1 className="text-3xl md:text-4xl font-bold mb-4" style={{color:"#FF7545"}}>Empower Your Finances, Simplify Your Life with CashTrackrr</h1>
         <br/>
