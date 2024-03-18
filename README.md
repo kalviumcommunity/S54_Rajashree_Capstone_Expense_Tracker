@@ -15,7 +15,7 @@ OneTrack is a versatile financial management app designed to streamline both per
 
 ### Business Mode:
 
-1. **Category Management:** Create and manage spending categories specific to business transactions, facilitating organized financial tracking.
+1. **Category Management:** Manage spending categories specific to business transactions, facilitating organized financial tracking.
 2. **Transaction History:** Users can record transactions with business contacts, detailing amounts paid or received. This feature provides a comprehensive view of financial interactions with each person.
 3. **Filterable Dashboard:** A customizable dashboard with filter options allows users to view transaction history based on specific criteria such as date, category, or contact, ensuring a clear understanding of business finances.
 4. **Loan Interest Calculator:** An integrated calculator assists in determining loan interest, helping users make informed financial decisions.
@@ -34,4 +34,10 @@ OneTrack is a versatile financial management app designed to streamline both per
 ## Target Audience:
 
 OneTrack caters to individuals seeking a comprehensive yet user-friendly solution to manage both personal and business expenses. It is suitable for freelancers, small business owners, and anyone looking to simplify their financial tracking.
+
+
+## Deployed link:
+ - Frontend- [link](https://cashtrackrr.vercel.app/)
+
+
 
