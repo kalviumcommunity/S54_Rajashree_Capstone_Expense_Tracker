@@ -4,7 +4,7 @@ import logo from '../../assets/Cashtrackrr-logo.png'
 const Footer = () => {
   return (
 <div className='items-center text-black'>
-  <footer className=" flex justify-evenly footer p-10 border-t" style={{boxShadow:"10px 2px 5px 1px #E0E0E0", backgroundColor:"#eceaea"}}>
+  <footer className=" flex justify-evenly footer p-10 border-t" style={{boxShadow:"0 0 5px 0 #E0E0E0"}}>
     <aside className='flex flex-col items-center'>
       <img src={logo} className='w-52'></img>
       <p className='w-44'>Take control of your finances with CashTrackrr, the all-in-one solution for effortless financial management.</p>
@@ -56,7 +56,7 @@ const Footer = () => {
     </div>
   </nav>
 </footer>
-<footer style={{boxShadow:"1px 1px 1px 1px #E0E0E0", paddingBottom:"30px", backgroundColor:"#eceaea"}}></footer>
+
 </div>
   )
 }
