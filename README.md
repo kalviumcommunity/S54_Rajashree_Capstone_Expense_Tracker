@@ -38,6 +38,7 @@ CashTrackrr caters to individuals seeking a comprehensive yet user-friendly solu
 
 ## Deployed link:
  - Frontend- [link](https://cashtrackrr.vercel.app/)
+ - Backend- [link](https://s54-rajashree-capstone-expense-tracker.vercel.app/)
 
 
 
