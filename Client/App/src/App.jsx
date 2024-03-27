@@ -1,10 +1,11 @@
 
 import './App.css'
-import Login from './Components/Login/Login'
+import PersonalDashboard from './Components/AfterLogin/PersonalMode/PersonalDashboard'
+// import Login from './Components/Login/Login'
 // import Landingpage from './Components/BeforeLogin/Landingpage'
 // import Navbar from './Components/BeforeLogin/Navbar'
 // import Footer from './Components/BeforeLogin/Footer'
-import Signup from './Components/Login/Signup'
+// import Signup from './Components/Login/Signup'
 
 function App() {
 
@@ -14,7 +15,8 @@ function App() {
       <Landingpage/>
       <Footer/> */}
       {/* <Signup/> */}
-      <Login/>
+      {/* <Login/> */}
+      <PersonalDashboard/>
     </>
   )
 }
