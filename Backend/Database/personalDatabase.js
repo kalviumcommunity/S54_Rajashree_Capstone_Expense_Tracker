@@ -5,23 +5,23 @@ const mongoose = require("mongoose");
 
 const PersonalCategory1 = new PersonalCategory({
     CategoryName:"Food",
-    MoneySpent:"Rs 0",
+    MoneySpent:"Rs 2000",
 })
 const PersonalCategory2 = new PersonalCategory({
     CategoryName:"Transport",
-    MoneySpent:"Rs 0",
+    MoneySpent:"Rs 1500",
 })
 const PersonalCategory3 = new PersonalCategory({
     CategoryName:"Health",
-    MoneySpent:"Rs 0",
+    MoneySpent:"Rs 500",
 })
 const PersonalCategory4 = new PersonalCategory({
     CategoryName:"Groceries",
-    MoneySpent:"Rs 0",
+    MoneySpent:"Rs 750",
 })
 const PersonalCategory5 = new PersonalCategory({
-    CategoryName:"Shopping",
-    MoneySpent:"Rs 0",
+    CategoryName:"Others",
+    MoneySpent:"Rs 1750",
 })
 
 
