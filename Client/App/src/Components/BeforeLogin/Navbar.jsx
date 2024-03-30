@@ -18,13 +18,13 @@ const Navbar = () => {
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
-      <li className='text-xl '><a>Home</a></li>
-      <li className='text-xl'><a>About Us</a></li>
-      <li className='text-xl'><a>Contact</a></li>
+      <li className='text-xl '><a href='/'>Home</a></li>
+      <li className='text-xl'><a href='/'>About Us</a></li>
+      <li className='text-xl'><a >Contact</a></li>
     </ul>
   </div>
   <div className="navbar-end">
-    <a className="btn bg-transparent border border-black w-26" style={{borderWidth:"3px", color:"black",  fontFamily: "'Itim', sans-serif"}}>L O G I N</a>
+    <a href='/login' className="btn bg-transparent border border-black w-26" style={{borderWidth:"3px", color:"black",  fontFamily: "'Itim', sans-serif"}}>L O G I N</a>
   </div>
 </div>
   );
