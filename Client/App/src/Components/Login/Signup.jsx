@@ -4,6 +4,7 @@ import Navbar from '../BeforeLogin/Navbar';
 import { useForm } from 'react-hook-form';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 const Signup = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -18,6 +19,7 @@ const Signup = () => {
     <div>
       <ToastContainer/>
       <Navbar />
+      <hr style={{boxShadow: "5px 0px 3px 0px rgba(0,0,0,0.3)" }}/>
       <div className='flex justify-evenly'>
         <div>
           <h1 className="text-black text-3xl mt-5 font-[inter] font-bold text-center">Sign Up</h1>
@@ -55,7 +57,9 @@ const Signup = () => {
               <span className="text-red-500 text-sm">Password must contain at least 1 lowercase letter, 1 uppercase letter, 1 digit, and 1 special character</span>
             )}
 
-            <button type="submit" className=" mt-2 w-2/4 bg-[#F35258] text-white py-2 px-4 rounded-md w-96 hover:bg-red-600 transition duration-300">Create your account</button>
+           <Link to="/personalDashboard">
+             <button type="submit" className=" mt-2 w-2/4 bg-[#F35258] text-white py-2 px-4 rounded-md w-96 hover:bg-red-600 transition duration-300">Create your account</button>
+           </Link>
           </form>
         </div>
         <div>

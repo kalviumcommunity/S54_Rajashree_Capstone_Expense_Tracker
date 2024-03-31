@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../../assets/Cashtrackrr-logo.png'
+import { Link } from 'react-router-dom';
 const Navbar = () => {
   return (
 <div className="navbar bg-white-100 text-black" style={{padding:"20px 70px"}}>
@@ -24,7 +25,9 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end">
-    <a href='/login' className="btn bg-transparent border border-black w-26" style={{borderWidth:"3px", color:"black",  fontFamily: "'Itim', sans-serif"}}>L O G I N</a>
+    <Link to="/login">
+      <button className="btn bg-transparent border border-black w-26" style={{borderWidth:"3px", color:"black",  fontFamily: "'Itim', sans-serif"}}>L O G I N</button>
+    </Link>
   </div>
 </div>
   );
