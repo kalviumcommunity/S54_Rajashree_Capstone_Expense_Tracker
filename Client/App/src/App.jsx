@@ -1,22 +1,22 @@
 
 import './App.css'
 import PersonalDashboard from './Components/AfterLogin/PersonalMode/PersonalDashboard'
-// import Login from './Components/Login/Login'
-// import Landingpage from './Components/BeforeLogin/Landingpage'
-// import Navbar from './Components/BeforeLogin/Navbar'
-// import Footer from './Components/BeforeLogin/Footer'
-// import Signup from './Components/Login/Signup'
+import Login from './Components/Login/Login'
+import Landingpage from './Components/BeforeLogin/Landingpage'
 
+import Signup from './Components/Login/Signup'
+import {Routes,Route} from 'react-router-dom'
 function App() {
 
   return (
     <>
-      {/* <Navbar/>
-      <Landingpage/>
-      <Footer/> */}
-      {/* <Signup/> */}
-      {/* <Login/> */}
-      <PersonalDashboard/>
+     <Routes>
+        <Route path='/' element={ <Landingpage/>}></Route>
+        <Route path='/signup' element={ <Signup/>}></Route>
+        <Route path='/login' element={ <Login/>}></Route>
+        <Route path='/personalDashboard' element={<PersonalDashboard/>}></Route>
+     </Routes>
+
     </>
   )
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import logo from '../../../assets/Cashtrackrr-logo.png';
 import { IconButton, Badge } from '@mui/material';
-import { AccountCircle, Notifications } from '@mui/icons-material';
-
+import { LogoutRounded, Notifications } from '@mui/icons-material';
+import {Link} from 'react-router-dom'
 const PersonalNavbar = () => {
   return (
     <div className="navbar bg-white-100 text-black" style={{ padding: "20px 70px" }}>
@@ -45,9 +45,11 @@ const PersonalNavbar = () => {
           </Badge>
         </IconButton>
 
+      <Link to='/'>
         <IconButton color="inherit" aria-label="profile">
-          <AccountCircle  style={{fontSize:"35px"}} />
+          <LogoutRounded  style={{fontSize:"35px"}} />
         </IconButton>
+      </Link>
       </div>
     </div>
   );

@@ -155,7 +155,7 @@ const PersonalDashboard = () => {
               Categories
             </h2>
             <div className="carousel carousel-center w-100 p-4 space-x-32  rounded-box relative">
-            <button className="prev-button absolute top-1/2 transform -translate-y-1/2 left-20 rounded-full" onClick={handlePrevClick} style={{ backgroundColor: 'black' }}><ChevronLeftIcon fontSize="large" /></button>
+            <button className="prev-button absolute top-1/2 transform -translate-y-1/2 left-20 rounded-full" onClick={handlePrevClick} style={{ backgroundColor: 'black', color:"white" }}><ChevronLeftIcon fontSize="large" /></button>
 
               {carouselItems.slice(currentItem, currentItem + 3).map((item, index) => (
                 <div key={index} className="carousel-item card w-80 text-black" style={{backgroundColor: item.bgColor}}>
@@ -168,7 +168,7 @@ const PersonalDashboard = () => {
                   </div>
                 </div>
               ))}
-       <button className="next-button absolute top-1/2 transform -translate-y-1/2 right-24 rounded-full" onClick={handleNextClick} style={{ backgroundColor: 'black' }}><ChevronRightIcon fontSize="large" /></button>
+       <button className="next-button absolute top-1/2 transform -translate-y-1/2 right-24 rounded-full" onClick={handleNextClick} style={{ backgroundColor: 'black' , color:"white" }}><ChevronRightIcon fontSize="large" /></button>
 
 
             </div>
