@@ -28,7 +28,7 @@ const getAllUser = async (req, res) => {
     }
   };
 
-
+  
   const addUserData = async (req, res) => {
     try {
       const { name, username, emailId, password } = req.body;

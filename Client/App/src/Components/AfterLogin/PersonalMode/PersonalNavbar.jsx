@@ -5,7 +5,8 @@ import { LogoutRounded, Notifications } from '@mui/icons-material';
 import {Link} from 'react-router-dom'
 const PersonalNavbar = () => {
   return (
-    <div className="navbar bg-white-100 text-black" style={{ padding: "20px 70px" }}>
+    <div style={{width:"100%", borderRadius:"1vw" ,backgroundColor:"white", filter:"drop-shadow(0 0 0.5vw #00000050" }}>
+      <div className="navbar bg-white-100 text-black" style={{ padding: "20px 70px" }} >
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -51,6 +52,7 @@ const PersonalNavbar = () => {
         </IconButton>
       </Link>
       </div>
+    </div>
     </div>
   );
 };
