@@ -27,7 +27,7 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      await axios.post('http://localhost:3000/userdata/post', formData);
+      await axios.post('https://s54-rajashree-capstone-expense-tracker.vercel.app//userdata/post', formData);
       toast.success('You have successfully created your account.', {
         onClose: () => {
           setFormData({ name: '', emailId: '', password: '' });
@@ -95,7 +95,7 @@ const Signup = () => {
             {/* submit button  */}
             <button type="submit" className=" mt-2 w-2/4 bg-[#F35258] text-white py-2 px-4 rounded-md w-96 hover:bg-red-600 transition duration-300">Create your account</button>
           </form>
-          
+
         </div>
         <div>
           <img src={signupImg} className='h-full' style={{ width: "580px" }} alt="Signup" />
