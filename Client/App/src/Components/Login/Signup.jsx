@@ -19,8 +19,7 @@ const Signup = () => {
     <div>
       <ToastContainer/>
       <Navbar />
-      <hr style={{boxShadow: "5px 0px 3px 0px rgba(0,0,0,0.3)" }}/>
-      <div className='flex justify-evenly'>
+      <div className='flex justify-evenly' style={{paddingTop:"120px"}} >
         <div>
           <h1 className="text-black text-3xl mt-5 font-[inter] font-bold text-center">Sign Up</h1>
           <p style={{color:"grey"}} className='mb-6 mt-2 text-center font-[inter]'>Enter credential to create your account</p>

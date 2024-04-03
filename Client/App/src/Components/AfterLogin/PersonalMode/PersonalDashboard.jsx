@@ -101,7 +101,7 @@ const PersonalDashboard = () => {
   return (
     <div>
       <PersonalNavbar />
-      <hr className="border-2 border-gray-300" />
+      {/* <hr className="border-2 border-gray-300" /> */}
       <div>
         {/* 1st Section  */}
         <div className="flex justify-evenly items-center mt-16 mb-16 ">

@@ -19,8 +19,7 @@ const Login = () => {
     <div>
       <ToastContainer/>
       <Navbar />
-      <hr style={{boxShadow: "5px 0px 3px 0px rgba(0,0,0,0.3)" }}/>
-      <div className='flex justify-evenly items-center py-2'>
+      <div className='flex justify-evenly items-center py-2'style={{paddingTop:"150px"}} >
         <div>
           <img src={signupImg} className='h-full' style={{width:"580px"}} alt="Login" />
         </div>
