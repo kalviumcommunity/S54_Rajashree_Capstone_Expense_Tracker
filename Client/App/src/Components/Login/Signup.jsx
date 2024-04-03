@@ -27,7 +27,7 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      await axios.post('https://s54-rajashree-capstone-expense-tracker.vercel.app//userdata/post', formData);
+      await axios.post('https://s54-rajashree-capstone-expense-tracker.vercel.app/userdata/post', formData);
       toast.success('You have successfully created your account.', {
         onClose: () => {
           setFormData({ name: '', emailId: '', password: '' });
