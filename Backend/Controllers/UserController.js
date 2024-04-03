@@ -31,27 +31,27 @@ const getAllUser = async (req, res) => {
   
   const addUserData = async (req, res) => {
     try {
-      const { name, username, emailId, password } = req.body;
-  
-      if (!name || !username || !emailId || !password) {
-        res.status(400).json({ error: "Enter all fields" });
-        throw new Error("Enter all fields");
-      }
-  
-      const createUserData = await UserSchema.create({
-        name,
-        username, 
-        emailId,
-        password
-      });
-  
-      res.status(201).json({ message: "User created", createUserData });
-  
+        const { name, emailId, password } = req.body;
+
+        if (!name || !emailId || !password) {
+            res.status(400).json({ error: "Enter all fields" });
+            return; // Return early to prevent further execution
+        }
+
+        const createUserData = await UserSchema.create({
+            name,
+            emailId,
+            password
+        });
+
+        res.status(201).json({ message: "User created", createUserData });
+
     } catch (error) {
-      console.log("error", error);
-      res.status(500).json({ message: "Error while creating" });
+        console.log("error", error);
+        res.status(500).json({ message: "Error while creating" });
     }
-  };
+};
+
 
   const deleteUserData = async (req, res) => {
     try {
