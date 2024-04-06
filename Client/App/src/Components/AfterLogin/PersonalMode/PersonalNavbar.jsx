@@ -26,7 +26,9 @@ const PersonalNavbar = () => {
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
+        <Link to="/personalDashboard">
           <li className='text-xl '><a>Dashboard</a></li>
+        </Link>
           <li className='text-xl'><a>Add Expense</a></li>
           <li className='text-xl'><a>About</a></li>
           <li className='text-xl'><a>Contact</a></li>
@@ -40,11 +42,13 @@ const PersonalNavbar = () => {
             <div className="swap-off btn bg-transparent border border-black text-black w-26">Business</div>
         </label>
 
+      <Link to="/notification">
         <IconButton color="inherit" aria-label="notifications">
-          <Badge badgeContent={1} color="secondary">
+          <Badge badgeContent={8} color="secondary">
             <Notifications style={{fontSize:"35px"}} />
           </Badge>
         </IconButton>
+      </Link>
 
       <Link to='/'>
         <IconButton color="inherit" aria-label="profile">

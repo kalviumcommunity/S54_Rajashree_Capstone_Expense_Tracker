@@ -6,6 +6,7 @@ import Landingpage from './Components/BeforeLogin/Landingpage'
 
 import Signup from './Components/Login/Signup'
 import {Routes,Route} from 'react-router-dom'
+import Notification from './Components/AfterLogin/PersonalMode/Notification'
 function App() {
 
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path='/signup' element={ <Signup/>}></Route>
         <Route path='/login' element={ <Login/>}></Route>
         <Route path='/personalDashboard' element={<PersonalDashboard/>}></Route>
+        <Route path='/notification' element={<Notification/>}></Route>
      </Routes>
 
     </>
