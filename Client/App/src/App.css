@@ -30,3 +30,42 @@ h4{
   color: #FF7545;
 }
 
+
+/* Define the animation */
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-notification {
+  animation: slideInFromRight 0.5s forwards;
+}
+
+
+@keyframes blink {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+  100% { transform: translateY(0); }
+}
+
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0; 
+}
+
+.custom-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none; 
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
