@@ -9,9 +9,9 @@ body {
   color: black;
 }
 
-h1{
+h1 {
   font-family: "Itim", cursive;
-  letter-spacing:4px;
+  letter-spacing: 4px;
 }
 
 #root {
@@ -20,13 +20,14 @@ h1{
   /* padding: 2rem; */
 }
 
-p,button{
+p,
+button {
   font-family: "Itim", cursive;
   /* font-family: "Crimson Text", serif; */
   font-weight: 100;
 }
 
-h4{
+h4 {
   color: #FF7545;
 }
 
@@ -37,6 +38,7 @@ h4{
     opacity: 0;
     transform: translateX(100%);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -49,23 +51,30 @@ h4{
 
 
 @keyframes blink {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(10px); }
-  100% { transform: translateY(0); }
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }
 
 
 .custom-scrollbar::-webkit-scrollbar {
   width: 0;
-  height: 0; 
+  height: 0;
 }
 
 .custom-scrollbar {
   scrollbar-width: none;
-  -ms-overflow-style: none; 
+  -ms-overflow-style: none;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
-
