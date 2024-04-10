@@ -15,11 +15,13 @@ const PersonalNavbar = () => {
               </svg>
             </div>
             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white-100 text-black rounded-box w-52">
+
               <li><a>Dashboard</a></li>
               <li><a>Add Expense</a></li>
               <li><a>About Us</a></li>
               <li><a>Contact</a></li>
               <li><a>Notification</a></li>
+
             </ul>
           </div>
           <img src={logo} className='w-40' alt="logo" />
@@ -29,7 +31,9 @@ const PersonalNavbar = () => {
             <Link to="/personalDashboard">
               <li className='text-xl '><a>Dashboard</a></li>
             </Link>
-            <li className='text-xl'><a>Add Expense</a></li>
+            <Link to="/personalExpense">
+              <li className='text-xl '><a>Add Expense</a></li>
+            </Link>
             <li className='text-xl'><a>About</a></li>
             <li className='text-xl'><a>Contact</a></li>
           </ul>

@@ -7,6 +7,7 @@ import Landingpage from './Components/BeforeLogin/Landingpage'
 import Signup from './Components/Login/Signup'
 import {Routes,Route} from 'react-router-dom'
 import Notification from './Components/AfterLogin/PersonalMode/Notification'
+import PersonalExpense from './Components/AfterLogin/PersonalMode/PersonalExpense'
 function App() {
 
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path='/login' element={ <Login/>}></Route>
         <Route path='/personalDashboard' element={<PersonalDashboard/>}></Route>
         <Route path='/notification' element={<Notification/>}></Route>
+        <Route path='/personalExpense' element={<PersonalExpense/>}></Route>
      </Routes>
 
     </>
