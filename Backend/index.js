@@ -13,13 +13,7 @@ app.use(express.json());
 
 async function connectDatabase() {
     try {
-        await mongoose.connect(process.env.mongoUrl, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            bufferCommands: false, 
-            connectTimeoutMS: 30000, 
-            socketTimeoutMS: 30000 
-        });
+        await mongoose.connect(process.env.mongoUrl);
         console.log('Connected to Database!');
     } catch (error) {
         console.error('Error connecting to Database:', error);
