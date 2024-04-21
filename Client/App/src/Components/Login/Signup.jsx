@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState,createContext } from 'react';
 import signupImg from '../../assets/signup2.webp';
 import Navbar from '../BeforeLogin/Navbar';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
+import {AppContext} from '../Context'
 
 const Signup = () => {
   const navigate = useNavigate(); 
@@ -22,12 +23,15 @@ const Signup = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const { isSignedUp, setIsSignedUp } = useContext(AppContext);
+  
   // on form submission 
   const onSubmit = async (e) => {
     e.preventDefault();
 
     try {
       await axios.post('https://s54-rajashree-capstone-expense-tracker.vercel.app/userdata/post', formData);
+      setIsSignedUp(true);
       toast.success('You have successfully created your account.', {
         onClose: () => {
           setFormData({ name: '', emailId: '', password: '' });
