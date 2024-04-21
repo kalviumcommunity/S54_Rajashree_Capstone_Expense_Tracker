@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useContext,useEffect } from 'react';
 import signupImg from '../../assets/login1.png';
 import Navbar from '../BeforeLogin/Navbar';
 import { useForm } from 'react-hook-form';
@@ -6,39 +6,55 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import {AppContext} from '../Context'
 
 const Login = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const [formData, setFormData] = useState(null);
   const navigate = useNavigate();
 
+  const { isLoggedIn, setIsLoggedIn } = useContext(AppContext);
+  const { username, setUsername } = useContext(AppContext);
+  const { userEmail, setUserEmail } = useContext(AppContext);
+
+  useEffect(() => {
+    console.log('userEmail:', userEmail);
+    console.log('username:', username);
+  }, [userEmail, username]);
+
   const onSubmit = async (data) => {
     setFormData(data);
-
+  
     try {
       const response = await axios.get('https://s54-rajashree-capstone-expense-tracker.vercel.app/userdata');
       const usersData = response.data;
-
+  
       console.log("Form Data:", data);
-      
+  
       const matchingUser = usersData.find(
         user => user.emailId === data.email && user.password === data.password
       );
-
+  
       if (matchingUser) {
         console.log("Matching User Data:", matchingUser);
         toast.success('You have successfully logged in.', {
           onClose: () => navigate('/personalDashboard')
         });
         reset();
+        setIsLoggedIn(true);
+        setUserEmail(data.email); 
+        setUsername(matchingUser.name); 
+        console.log(isLoggedIn); 
       } else {
         toast.error('Invalid email or password');
       }
+  
     } catch (error) {
       console.error('Error fetching user data:', error);
       toast.error('An error occurred while logging in');
     }
   };
+
 
   return (
     <div>
