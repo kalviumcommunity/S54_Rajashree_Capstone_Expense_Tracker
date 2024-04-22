@@ -70,7 +70,7 @@ const getAllUser = async (req, res) => {
         res.status(500).json({ message: "Error while deleting" });
     }
 };
-
+9
   
   module.exports = {
     getAllUser,
