@@ -29,27 +29,24 @@ const getOnePersonalCategory = async (req, res) => {
 
 const addPersonalCategory = async (req, res) => {
     try {
-        const { name, budget, category, spent } = req.body;
+        const { name, category, spent, date } = req.body;
 
-        if (!name || !budget || !category || !spent) {
+        if (!name|| !category || !spent || !date) {
             res.status(400).json({ error: "Enter all fields" });
             return; // Return early to prevent further execution
         }
 
-        // Get the current date
-        const currentDate = new Date();
-
-        // Get the current month name
+        // Parse the input date to obtain the month name
+        const inputDate = new Date(date);
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        const currentMonth = monthNames[currentDate.getMonth()];
+        const currentMonth = monthNames[inputDate.getMonth()];
 
-        // Create a new category with the current date and month
+        // Create a new category with the input date and dynamically generated month name
         const newCategory = await PersonalCategory.create({
             name,
-            budget,
             category,
             spent,
-            date: currentDate,
+            date: inputDate, // Store the input date
             month: currentMonth
         });
 
@@ -60,6 +57,7 @@ const addPersonalCategory = async (req, res) => {
         res.status(500).json({ message: "Error while creating Personal Category" });
     }
 };
+
 
 
 

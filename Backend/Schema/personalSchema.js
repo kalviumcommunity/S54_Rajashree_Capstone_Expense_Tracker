@@ -5,10 +5,6 @@ const PersonalCategorySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    budget: {
-        type: Number,
-        required: true
-    },
     category: {
         type: String,
         required: true
