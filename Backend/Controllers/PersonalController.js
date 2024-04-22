@@ -29,21 +29,19 @@ const getOnePersonalCategory = async (req, res) => {
 
 const addPersonalCategory = async (req, res) => {
     try {
-        const { name, category, spent, date } = req.body;
+        const { email, category, spent, date } = req.body;
 
-        if (!name|| !category || !spent || !date) {
+        if (!email|| !category || !spent || !date) {
             res.status(400).json({ error: "Enter all fields" });
             return; // Return early to prevent further execution
         }
 
-        // Parse the input date to obtain the month name
         const inputDate = new Date(date);
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         const currentMonth = monthNames[inputDate.getMonth()];
 
-        // Create a new category with the input date and dynamically generated month name
         const newCategory = await PersonalCategory.create({
-            name,
+            email,
             category,
             spent,
             date: inputDate, // Store the input date

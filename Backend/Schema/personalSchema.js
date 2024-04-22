@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const PersonalCategorySchema = new mongoose.Schema({
-    name: {
+    email: {
         type: String,
         required: true
     },
