@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PersonalNavbar from './PersonalNavbar';
 import Footer from '../../BeforeLogin/Footer';
 import { Delete } from '@mui/icons-material';
@@ -9,9 +9,58 @@ import CommuteIcon from '@mui/icons-material/Commute';
 import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import SavingsIcon from '@mui/icons-material/Savings';
+import { AppContext } from '../../Context'
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PersonalExpense = () => {
-    const [hoveredIndex, setHoveredIndex] = useState(null); // State to track hovered card index
+    const [hoveredIndex, setHoveredIndex] = useState(null);
+    const [isFormOpen, setIsFormOpen] = useState(true);
+
+    const { userEmail, setUserEmail } = useContext(AppContext);
+
+    const [formData, setFormData] = useState({
+        category: '',
+        spent: '',
+        date: ''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const formDataWithEmail = {
+                ...formData,
+                email: userEmail
+            };
+    
+            const response = await axios.post('http://localhost:3000/personal/post', formDataWithEmail);
+            console.log('Expense added:', response.data);
+    
+            toast.success('Expense added successfully!', {
+                onClose: () => {
+                    setFormData({
+                        category: '',
+                        spent: '',
+                        date: ''
+                    });
+                    setIsFormOpen(false);
+                }
+            });
+        } catch (error) {
+            console.error('Error adding expense:', error);
+            console.log(userEmail)
+        }
+    };
+    
 
     const expenseData = [
         {
@@ -164,7 +213,7 @@ const PersonalExpense = () => {
                     <button className="btn border-none fixed bottom-4 rounded-full right-10 bg-[#5E60CE]" onClick={() => document.getElementById('my_modal_3').showModal()}>
                         <span className='text-white text-3xl'>+</span>
                     </button>
-                    <dialog id="my_modal_3" className="modal">
+                     {isFormOpen && (<dialog id="my_modal_3" className="modal">
                         <div className="modal-box bg-white">
                             {/* Form close button  */}
                             <form method="dialog">
@@ -173,10 +222,13 @@ const PersonalExpense = () => {
 
                             {/* Form inputs  */}
                             <div className='flex justify-center'>
-                                <form action="" className='flex w-3/4 flex-col'>
+                                <form action="" className='flex w-3/4 flex-col' onSubmit={handleSubmit}>
                                     <h2 className='font-bold text-center text-[#5e60ce] text-3xl py-10'>Add your Expense</h2>
                                     <label className="text-xl pb-2" htmlFor="">Select Category</label>
-                                    <select className='bg-white border-[#5E60CE] border-2 rounded text-black px-2 py-2 mb-10'>
+                                    <select className='bg-white border-[#5E60CE] border-2 rounded text-black px-2 py-2 mb-10'
+                                        name="category"
+                                        value={formData.category}
+                                        onChange={handleChange}>
                                         <option value="Food">Food</option>
                                         <option value="Health">Health</option>
                                         <option value="Groceries">Groceries</option>
@@ -185,10 +237,20 @@ const PersonalExpense = () => {
                                     </select>
 
                                     <label className="text-xl pb-2" htmlFor="">Enter Amount Spent (Rs)</label>
-                                    <input type="number" className='bg-white border-[#5E60CE] border-2 rounded text-black px-2 py-2 mb-10' />
+                                    <input type="number"
+                                        name="spent"
+                                        value={formData.spent}
+                                        onChange={handleChange}
+                                        className='bg-white border-[#5E60CE] border-2 rounded text-black px-2 py-2 mb-10' />
 
-                                    <label className="text-xl pb-2" htmlFor="">Enter date</label>
-                                    <input type="date" className='bg-white border-[#5E60CE] border-2 rounded text-black px-2 py-2 mb-10' />
+                                    <label className="text-xl pb-2" htmlFor="">Enter date (YYYY-MM-DD)</label>
+                                    <input
+                                        type="text"
+                                        name="date"
+                                        value={formData.date}
+                                        onChange={handleChange}
+                                        className='bg-white border-[#5E60CE] border-2 rounded text-black px-2 py-2 mb-10' />
+
                                     <div className='flex items-center justify-center space-x-6'>
                                         <button className='btn btn-ghost bg-[#5e60ce] text-white text-lg w-28'>Add</button>
                                         <form method="dialog">
@@ -198,10 +260,11 @@ const PersonalExpense = () => {
                                 </form>
                             </div>
                         </div>
-                    </dialog>
+                    </dialog>)}
                 </div>
             </div>
             <Footer />
+            <ToastContainer />
         </div>
     );
 };
