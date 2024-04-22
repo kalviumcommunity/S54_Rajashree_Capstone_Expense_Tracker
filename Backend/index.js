@@ -4,6 +4,7 @@ require("dotenv").config();
 const cors = require("cors");
 
 const userDataRoutes = require("./Routes/UserRouter");
+const personalDataRoutes = require("./Routes/PersonalRoutes");
 
 const app = express();
 const PORT = 3000;
@@ -29,6 +30,7 @@ app.get("/ping", (req, res) => {
 
 
 app.use('/userdata', userDataRoutes);
+app.use('/personal', personalDataRoutes);
 
 
 app.use((err, req, res, next) => {
