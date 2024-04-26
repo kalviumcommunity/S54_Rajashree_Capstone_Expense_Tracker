@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import signupImg from '../../assets/signup2.webp';
 import Navbar from '../BeforeLogin/Navbar';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { AppContext } from '../Context';
 
 const Signup = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -16,18 +17,22 @@ const Signup = () => {
   });
 
   const { name, emailId, password } = formData;
-
+  const [isLoading, setIsLoading] = useState(false); // State for loading spinner
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // on form submission 
+  const { isSignedUp, setIsSignedUp } = useContext(AppContext);
+
+  // on form submission
   const onSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true); // Set loading state to true when submitting signup form
 
     try {
       await axios.post('https://s54-rajashree-capstone-expense-tracker.vercel.app/userdata/post', formData);
+      setIsSignedUp(true);
       toast.success('You have successfully created your account.', {
         onClose: () => {
           setFormData({ name: '', emailId: '', password: '' });
@@ -37,6 +42,8 @@ const Signup = () => {
     } catch (error) {
       console.error('Error creating account:', error.message);
       toast.error('An error occurred while creating your account.');
+    } finally {
+      setIsLoading(false); // Set loading state to false when signup process is complete
     }
   };
 
@@ -53,10 +60,10 @@ const Signup = () => {
           <form className="flex flex-col w-full max-w-md" onSubmit={onSubmit}>
 
             {/* google sign up button  */}
-          <button className="btn flex items-center text-black border-solid border-2 border-gray-500 text-lg md:text-xl bg-[white] py-2 px-8 w-96 rounded-lg hover:bg-opacity-80 transition duration-300">
+            <button className="btn flex items-center text-black border-solid border-2 border-gray-500 text-lg md:text-xl bg-[white] py-2 px-8 w-96 rounded-lg hover:bg-opacity-80 transition duration-300">
               <img width={"20px"} src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png" alt="" />Google
             </button>
-            
+
             <div className="divider">OR</div>
 
             {/* name  */}
@@ -73,7 +80,7 @@ const Signup = () => {
             {/* email  */}
             <label className="text-left mt-4">Email</label>
             <input
-              type="emailId"
+              type="email"
               name="emailId"
               value={emailId}
               onChange={handleChange}
@@ -92,8 +99,14 @@ const Signup = () => {
               className="mt-2 mb-2 w-96 px-4 py-2 border rounded-md focus:outline-none focus:border-[#F35258] bg-white text-black"
             />
 
-            {/* submit button  */}
-            <button type="submit" className=" mt-2 w-2/4 bg-[#F35258] text-white py-2 px-4 rounded-md w-96 hover:bg-red-600 transition duration-300">Create your account</button>
+            {/* submit button with loading spinner */}
+            <button type="submit" className="mt-2 w-2/4 bg-[#F35258] text-white py-2 px-4 rounded-md w-96 hover:bg-red-600 transition duration-300">
+              {isLoading ? (
+                <span className="loading loading-bars loading-md"></span>
+              ) : (
+                'Create your account'
+              )}
+            </button>
           </form>
 
         </div>
