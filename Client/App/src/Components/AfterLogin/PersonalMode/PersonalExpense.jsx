@@ -37,19 +37,19 @@ const PersonalExpense = () => {
     }, [selectedDate]);
 
     useEffect(() => {
-        // Fetch data when component mounts
         fetchData();
         setSelectedDate(null); // Set selectedDate as null
         const userEmailFromLocalStorage = localStorage.getItem('userEmail');
         if (userEmailFromLocalStorage) {
             setUserEmail(userEmailFromLocalStorage);
         }
-    }, []);
+    }, [userEmail]);
+    
     
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/personal');
+            const response = await axios.get('https://s54-rajashree-capstone-expense-tracker.vercel.app/personal');
             const filteredData = response.data.filter(item => item.email === userEmail);
             const filteredByDate = selectedDate
                 ? filteredData.filter(item => {
@@ -87,30 +87,32 @@ const PersonalExpense = () => {
         }));
     };
 
-    const handleSubmit = async e => {
-        e.preventDefault();
-        try {
-            const formDataWithEmail = {
-                ...formData,
-                email: userEmail,
-            };
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+        const formDataWithEmail = {
+            ...formData,
+            email: userEmail,
+        };
 
-            const response = await axios.post('http://localhost:3000/personal/post', formDataWithEmail);
-            console.log('Expense added:', response.data);
+        const response = await axios.post('https://s54-rajashree-capstone-expense-tracker.vercel.app/personal/post', formDataWithEmail);
+        console.log('Expense added:', response.data);
 
-            toast.success('Expense added successfully!', {
-                onClose: () => {
-                    setFormData({
-                        category: '',
-                        spent: '',
-                        date: '',
-                    });
-                },
-            });
-        } catch (error) {
-            console.error('Error adding expense:', error);
-        }
-    };
+        toast.success('Expense added successfully!', {
+            onClose: () => {
+                setFormData({
+                    category: '',
+                    spent: '',
+                    date: '',
+                });
+                window.location.reload(); // Refresh the page
+            },
+        });
+    } catch (error) {
+        console.error('Error adding expense:', error);
+    }
+};
+
 
     // Group expenses by date
     const groupedExpenses = {};
@@ -152,12 +154,13 @@ const PersonalExpense = () => {
                     {/* filter by date */}
                     <div className='flex justify-center space-x-20 items-center py-2 px-28'>
                         <div>
-                            <h2 className='text-[#6930C3] font-bold text-2xl'>Filter by date:</h2>
+                            <h2 className='text-[#6930C3] font-bold text-2xl'>Filter by date   :</h2>
                         </div>
                         <div>
                             <DatePicker
                                 selected={selectedDate}
                                 onChange={(date) => setSelectedDate(date)}
+                                popperPlacement="top"
                                 dateFormat="yyyy-MM-dd"
                                 className="bg-white border-2 border-[#6930C3] py-4 w-72 px-2"
                             />
@@ -172,7 +175,7 @@ const PersonalExpense = () => {
                                 // If there are expenses for the selected date, display them
                                 sortedDates.map(date => (
                                     <details key={date} className="collapse bg-white" open={true}>
-                                        <summary className="collapse-title  ml-24 text-2xl font-medium ">
+                                        <summary className="collapse-title  ml-16 text-2xl font-medium ">
                                             <ArrowRightIcon style={{ fontSize: "40px" }} />
                                             {date}
                                         </summary>
@@ -218,7 +221,7 @@ const PersonalExpense = () => {
                             // If no date is selected, display all expenses
                             sortedDates.map(date => (
                                 <details key={date} className="collapse bg-white" open={true}>
-                                    <summary className="collapse-title  ml-24 text-2xl font-medium ">
+                                    <summary className="collapse-title  ml-16 text-2xl font-medium ">
                                         <ArrowRightIcon style={{ fontSize: "40px" }} />
                                         {date}
                                     </summary>
