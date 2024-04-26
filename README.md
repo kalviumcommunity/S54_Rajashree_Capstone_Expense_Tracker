@@ -8,21 +8,18 @@ CashTrackrr is a versatile financial management app designed to streamline both 
 
 ### Personal Mode:
 
-1. **Category Management:** Users can effortlessly add, edit, and delete spending categories, ensuring personalized tracking of expenses.
-2. **Budget Setting:** Set monthly budgets for various spending categories to manage and control personal expenses effectively.
-3. **Real-time Notifications:** Receive instant notifications when spending exceeds the preset budget, promoting financial discipline.
-4. **Dashboard:** A visually intuitive dashboard displays spending patterns, budget progress, and provides an overall snapshot of personal finances.
+1. **Budget Setting:** Set monthly budgets for various spending categories to manage and control personal expenses effectively.
+2. **Real-time Notifications:** Receive instant notifications when spending exceeds the preset budget, promoting financial discipline.
+3. **Dashboard:** A visually intuitive dashboard displays spending patterns, budget progress, and provides an overall snapshot of personal finances.
 
 ### Business Mode:
 
-1. **Category Management:** Manage spending categories specific to business transactions, facilitating organized financial tracking.
-2. **Transaction History:** Users can record transactions with business contacts, detailing amounts paid or received. This feature provides a comprehensive view of financial interactions with each person.
-3. **Filterable Dashboard:** A customizable dashboard with filter options allows users to view transaction history based on specific criteria such as date, category, or contact, ensuring a clear understanding of business finances.
-4. **Loan Interest Calculator:** An integrated calculator assists in determining loan interest, helping users make informed financial decisions.
+1. **Transaction History:** Users can record transactions with business contacts, detailing amounts paid or received. This feature provides a comprehensive view of financial interactions with each person.
+2. **Filterable Dashboard:** A customizable dashboard with filter options allows users to view transaction history based on specific criteria such as date, category, or contact, ensuring a clear understanding of business finances.
 
 ### Additional Feature:
 
-- **User-Generated Data:** CashTrackrr empowers users to input their own financial data, providing a personalized touch to their expense tracking. Users can tailor the app to their specific needs, enhancing its adaptability.
+- **Loan Interest Calculator:** An integrated calculator assists in determining loan interest, helping users make informed financial decisions.
 
 ## Why CashTrackrr:
 
