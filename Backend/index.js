@@ -5,6 +5,7 @@ const cors = require("cors");
 
 const userDataRoutes = require("./Routes/UserRouter");
 const personalDataRoutes = require("./Routes/PersonalRoutes");
+const budgetDataRoutes = require("./Routes/BudgetRoutes");
 
 const app = express();
 const PORT = 3000;
@@ -24,6 +25,10 @@ async function connectDatabase() {
 
 connectDatabase();
 
+// app.get("/", (req, res) => {
+//     res.send("Welcome to Cashtrackrr");
+// });
+
 app.get("/ping", (req, res) => {
     res.send("Welcome to Cashtrackrr, your all-in-one solution for tracking your expenses.");
 });
@@ -31,12 +36,14 @@ app.get("/ping", (req, res) => {
 
 app.use('/userdata', userDataRoutes);
 app.use('/personal', personalDataRoutes);
+app.use('/budget', budgetDataRoutes);
 
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).send("Something went wrong!");
+    res.status(500).json({ message: "Internal Server Error", error: err.message });
 });
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
