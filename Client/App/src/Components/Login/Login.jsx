@@ -1,7 +1,4 @@
-
-
-import React, { useState,useContext,useEffect } from 'react';
-
+import React, { useState, useContext, useEffect } from 'react';
 import signupImg from '../../assets/login1.png';
 import Navbar from '../BeforeLogin/Navbar';
 import { useForm } from 'react-hook-form';
@@ -9,18 +6,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
 import { AppContext } from '../Context';
-
-import {AppContext} from '../Context'
-
 
 const Login = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const [formData, setFormData] = useState(null);
-
   const [isLoading, setIsLoading] = useState(false); // State for loading spinner
-
   const navigate = useNavigate();
 
   const { isLoggedIn, setIsLoggedIn } = useContext(AppContext);
@@ -30,14 +21,11 @@ const Login = () => {
   useEffect(() => {
     console.log('userEmail:', userEmail);
     console.log('username:', username);
-
     console.log(isLoggedIn);
-
   }, [userEmail, username]);
 
   const onSubmit = async (data) => {
     setFormData(data);
-
     setIsLoading(true); // Set loading state to true when submitting login form
 
     try {
@@ -50,18 +38,6 @@ const Login = () => {
         user => user.emailId === data.email && user.password === data.password
       );
 
-  
-    try {
-      const response = await axios.get('https://s54-rajashree-capstone-expense-tracker.vercel.app/userdata');
-      const usersData = response.data;
-  
-      console.log("Form Data:", data);
-  
-      const matchingUser = usersData.find(
-        user => user.emailId === data.email && user.password === data.password
-      );
-  
-
       if (matchingUser) {
         console.log("Matching User Data:", matchingUser);
         toast.success('You have successfully logged in.', {
@@ -69,7 +45,6 @@ const Login = () => {
         });
         reset();
         setIsLoggedIn(true);
-
         setUserEmail(data.email);
         localStorage.setItem('userEmail', data.email);
         setUsername(matchingUser.name);
@@ -82,20 +57,8 @@ const Login = () => {
       toast.error('An error occurred while logging in');
     } finally {
       setIsLoading(false); // Set loading state to false when login process is complete
-
-        setUserEmail(data.email); 
-        setUsername(matchingUser.name); 
-        console.log(isLoggedIn); 
-      } else {
-        toast.error('Invalid email or password');
-      }
-  
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-
     }
   };
-
 
   return (
     <div>
@@ -130,15 +93,11 @@ const Login = () => {
             />
             {errors.password && <span className="text-red-500 text-sm">Password must be at least 8 characters</span>}
             <button type="submit" className="mt-2 bg-[#58289D] text-white py-2 px-4 rounded-md w-96 hover:bg-violet-600 transition duration-300">
-
               {isLoading ? (
                 <span className="loading loading-dots loading-md"></span>
               ) : (
                 'Login'
               )}
-
-              Login
-
             </button>
             <p className='font-[inter] m-4 text-center text-black'>
               <Link to='/signup'>Don't have an account? <b className='font-bold'>Register here</b></Link>

@@ -1,19 +1,11 @@
-
 import React, { useState, useContext } from 'react';
-
-import React, { useState,createContext } from 'react';
-
 import signupImg from '../../assets/signup2.webp';
 import Navbar from '../BeforeLogin/Navbar';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
 import { AppContext } from '../Context';
-
-import {AppContext} from '../Context'
-
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -33,12 +25,7 @@ const Signup = () => {
 
   const { isSignedUp, setIsSignedUp } = useContext(AppContext);
 
-
   // on form submission
-
-  
-  // on form submission 
-
   const onSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true); // Set loading state to true when submitting signup form
