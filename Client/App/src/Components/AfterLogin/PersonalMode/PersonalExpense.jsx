@@ -106,18 +106,18 @@ const PersonalExpense = () => {
                 return;
             }
             // Fetch all budget data
-            const allBudgetData = await axios.get(`http://localhost:3000/budget`);
+            const allBudgetData = await axios.get(`https://s54-rajashree-capstone-expense-tracker.vercel.app/budget`);
     
             // Check if there is an entry for the current month
             const currentMonthEntry = allBudgetData.data.find(item => item.email === userEmail && item.month === getCurrentMonth());
     
             if (currentMonthEntry) {
                 // If an entry exists for the current month, update the budget
-                await axios.put(`http://localhost:3000/budget/put/${currentMonthEntry._id}`, { budget });
+                await axios.put(`https://s54-rajashree-capstone-expense-tracker.vercel.app/budget/put/${currentMonthEntry._id}`, { budget });
                 toast.success('Budget updated successfully!');
             } else {
                 // If no entry exists for the current month, create a new budget entry
-                await axios.post(`http://localhost:3000/budget/post`, { email: userEmail, budget, month: getCurrentMonth() });
+                await axios.post(`https://s54-rajashree-capstone-expense-tracker.vercel.app/budget/post`, { email: userEmail, budget, month: getCurrentMonth() });
                 toast.success('Budget posted successfully!');
             }
     

@@ -7,10 +7,10 @@ const Context =({children}) => {
  const [isSignedUp, setIsSignedUp] = useState(false);
  const[username,setUsername]=useState("")
  const[userEmail,setUserEmail]=useState("")
- const[budget,setBudget]=useState("0")
+ const[totalSpent, setTotalSpent]=useState("0")
 
   return (
-    <AppContext.Provider value={{isSignedUp,setIsSignedUp,isLoggedIn, setIsLoggedIn,username,setUsername,userEmail,setUserEmail,budget,setBudget}}>
+    <AppContext.Provider value={{isSignedUp,setIsSignedUp,isLoggedIn, setIsLoggedIn,username,setUsername,userEmail,setUserEmail,totalSpent, setTotalSpent}}>
         {children}
     </AppContext.Provider>
   )
