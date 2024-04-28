@@ -26,6 +26,8 @@ const PersonalExpense = () => {
         spent: '',
         date: '',
     });
+    const [budget, setBudget] = useState(0);
+
     const [selectedDate, setSelectedDate] = useState(() => {
         // Initialize selectedDate from localStorage if available
         const savedDate = localStorage.getItem('selectedDate');
@@ -34,7 +36,8 @@ const PersonalExpense = () => {
 
     useEffect(() => {
         fetchData();
-    }, [selectedDate]);
+        fetchBudget();
+    }, [selectedDate, userEmail]);
 
     useEffect(() => {
         fetchData();
@@ -44,8 +47,8 @@ const PersonalExpense = () => {
             setUserEmail(userEmailFromLocalStorage);
         }
     }, [userEmail]);
-    
-    
+
+
 
     const fetchData = async () => {
         try {
@@ -76,7 +79,55 @@ const PersonalExpense = () => {
         }
     }, [selectedDate]);
 
+    const fetchBudget = async () => {
+        try {
+            const response = await axios.get(`https://s54-rajashree-capstone-expense-tracker.vercel.app/budget`);
+            const currentMonthBudget = response.data.find(item => item.email === userEmail && item.month === getCurrentMonth());
+            if (currentMonthBudget) {
+                setBudget(currentMonthBudget.budget);
+            } else {
+                setBudget(0);
+            }
+        } catch (error) {
+            console.error('Error fetching budget:', error);
+            toast.error('Failed to fetch budget data. Please try again later.');
+        }
+    };
 
+    const getCurrentMonth = () => {
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        return monthNames[new Date().getMonth()];
+    };
+
+    const handleSetBudget = async () => {
+        try {
+            if (budget < 0) {
+                toast.error('Budget cannot be negative.');
+                return;
+            }
+            // Fetch all budget data
+            const allBudgetData = await axios.get(`http://localhost:3000/budget`);
+    
+            // Check if there is an entry for the current month
+            const currentMonthEntry = allBudgetData.data.find(item => item.email === userEmail && item.month === getCurrentMonth());
+    
+            if (currentMonthEntry) {
+                // If an entry exists for the current month, update the budget
+                await axios.put(`http://localhost:3000/budget/put/${currentMonthEntry._id}`, { budget });
+                toast.success('Budget updated successfully!');
+            } else {
+                // If no entry exists for the current month, create a new budget entry
+                await axios.post(`http://localhost:3000/budget/post`, { email: userEmail, budget, month: getCurrentMonth() });
+                toast.success('Budget posted successfully!');
+            }
+    
+        } catch (error) {
+            console.error('Error updating budget:', error);
+            toast.error('Failed to update budget. Please try again later.');
+        }
+    };
+    
+    
 
 
     const handleChange = e => {
@@ -88,30 +139,30 @@ const PersonalExpense = () => {
     };
 
     const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-        const formDataWithEmail = {
-            ...formData,
-            email: userEmail,
-        };
+        e.preventDefault();
+        try {
+            const formDataWithEmail = {
+                ...formData,
+                email: userEmail,
+            };
 
-        const response = await axios.post('https://s54-rajashree-capstone-expense-tracker.vercel.app/personal/post', formDataWithEmail);
-        console.log('Expense added:', response.data);
+            const response = await axios.post('https://s54-rajashree-capstone-expense-tracker.vercel.app/personal/post', formDataWithEmail);
+            console.log('Expense added:', response.data);
 
-        toast.success('Expense added successfully!', {
-            onClose: () => {
-                setFormData({
-                    category: '',
-                    spent: '',
-                    date: '',
-                });
-                window.location.reload(); // Refresh the page
-            },
-        });
-    } catch (error) {
-        console.error('Error adding expense:', error);
-    }
-};
+            toast.success('Expense added successfully!', {
+                onClose: () => {
+                    setFormData({
+                        category: '',
+                        spent: '',
+                        date: '',
+                    });
+                    window.location.reload(); 
+                },
+            });
+        } catch (error) {
+            console.error('Error adding expense:', error);
+        }
+    };
 
 
     // Group expenses by date
@@ -136,13 +187,25 @@ const PersonalExpense = () => {
                     <div className="card flex flex-row rounded-box w-96 bg-white shadow-xl w-1/2">
                         <div className="flex flex-row items-center justify-center card-body">
                             <Savings style={{ fontSize: "50px", color: "#6930C3" }} />
-                            <h2 className="text-2xl card-title ">BUDGET : <span className='text-[#6930C3] font-bold'>  Rs 1000</span></h2>
+                            <h2 className="text-2xl card-title ">BUDGET : <span className='text-[#6930C3] font-bold'> Rs {budget}</span></h2>
                         </div>
                     </div>
                     <div className='divider divider-horizontal divider-neutral'></div>
                     <div className='space-x-6'>
-                        <input className="bg-white py-4 w-64 px-4" placeholder="Enter your budget" type="number" />
-                        <button className='btn bg-white text-[#6930C3]'>Set Budget</button>
+                        <input
+                            className="bg-white py-4 w-64 px-4"
+                            placeholder="Enter your budget"
+                            type="number"
+                            value={budget}
+                            min="0"
+                            onChange={e => setBudget(e.target.value)}
+                        />
+                        <button
+                            className='btn bg-white text-[#6930C3]'
+                            onClick={handleSetBudget}
+                        >
+                            Set Budget
+                        </button>
                     </div>
                 </div>
 
