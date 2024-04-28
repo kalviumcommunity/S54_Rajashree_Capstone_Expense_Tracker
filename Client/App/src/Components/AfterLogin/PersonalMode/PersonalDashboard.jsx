@@ -17,10 +17,11 @@ import {
 
 const PersonalDashboard = () => {
   const [currentItem, setCurrentItem] = useState(0);
-  const [budgetData, setBudgetData] = useState(null);
+  const [budgetData, setBudgetData] = useState(0);
   const [personalCategoryData, setPersonalCategoryData] = useState([]);
   const { totalSpent, setTotalSpent } = useContext(AppContext);
   const { userEmail, setUserEmail } = useContext(AppContext);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     fetchBudgetData();
@@ -33,6 +34,37 @@ const PersonalDashboard = () => {
       setUserEmail(userEmailFromLocalStorage);
     }
   }, []);
+  
+  useEffect(() => {
+    fetchPreviousMonthData().then(totalPreviousMonth => {
+      const totalCurrentMonth = totalSpent;
+      const percentageSpentCurrentMonth = totalCurrentMonth / (budgetData ? budgetData.budget : 1) * 100;
+      const percentageSpentPreviousMonth = totalPreviousMonth / (budgetData ? budgetData.budget : 1) * 100;
+      const differencePercentage = percentageSpentCurrentMonth - percentageSpentPreviousMonth;
+
+      let comparisonMessage = '';
+      if (differencePercentage < 0) {
+        comparisonMessage = `You have spent ${Math.abs(differencePercentage).toFixed(0)}% less compared to last month.`;
+      } else if (differencePercentage > 0) {
+        comparisonMessage = `You have spent ${differencePercentage.toFixed(0)}% more compared to last month.`;
+      } else {
+        comparisonMessage = `You have spent the same percentage compared to last month.`;
+      }
+      
+      setMessage(comparisonMessage);
+
+      const pieChartData = [totalPreviousMonth, totalCurrentMonth];
+      setPieData({
+        datasets: [
+          {
+            data: pieChartData,
+            backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)'],
+            hoverOffset: 4,
+          },
+        ],
+      });
+    });
+  }, [userEmail, totalSpent, budgetData]);
 
   const fetchBudgetData = async () => {
     try {
@@ -117,76 +149,39 @@ const PersonalDashboard = () => {
     return monthNames[previousMonthIndex];
   };
 
-
-  useEffect(() => {
-    fetchPreviousMonthData().then(totalPreviousMonth => {
-      const totalCurrentMonth = totalSpent;
-      const percentageSpentCurrentMonth = totalCurrentMonth / (budgetData ? budgetData.budget : 1) * 100;
-      const percentageSpentPreviousMonth = totalPreviousMonth / (budgetData ? budgetData.budget : 1) * 100;
-      const differencePercentage = percentageSpentCurrentMonth - percentageSpentPreviousMonth;
-
-      let comparisonMessage = '';
-      if (differencePercentage < 0) {
-        comparisonMessage = `You have spent ${Math.abs(differencePercentage).toFixed(0)}% less compared to last month.`;
-      } else if (differencePercentage > 0) {
-        comparisonMessage = `You have spent ${differencePercentage.toFixed(0)}% more compared to last month.`;
-      } else {
-        comparisonMessage = `You have spent the same percentage compared to last month.`;
-      }
-
-      setMessage(comparisonMessage);
-
-      const pieChartData = [totalPreviousMonth, totalCurrentMonth];
-      setPieData({
-        datasets: [
-          {
-            data: pieChartData,
-            backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)'],
-            hoverOffset: 4,
-          },
-        ],
-      });
-    });
-  }, [userEmail, totalSpent, budgetData]);
-
-  const [message, setMessage] = useState('');
-
-
   // Data for the Pie chart
   const [pieData, setPieData] = useState({
     datasets: [
       {
-        data: [0, 0],
-        backgroundColor: ['rgb(54, 162, 235)', 'rgb(255, 99, 132)'],
+        data: [50],
+        backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)'],
         hoverOffset: 4,
       },
     ],
   });
 
-  const percentageSpent = totalSpent / (budgetData ? budgetData.budget : 1) * 100;
-
+  const categoryColors = {
+    Food: 'rgba(153, 102, 255, 0.5)',
+    Groceries: 'rgba(54, 162, 235, 0.5)',
+    Transport: 'rgba(255, 205, 86, 0.5)',
+    Health: 'rgba(255, 99, 132, 0.5)',
+    Others: 'rgba(75, 192, 192, 0.5)',
+  };
   // Data for the Bar chart
-  const barLabels = personalCategoryData.map(item => item.category);
+  // Data for the Bar chart
+  const allCategories = ['Food', 'Groceries', 'Transport', 'Health', 'Others'];
+  const barLabels = allCategories;
   const barData = {
     labels: barLabels,
     datasets: [
       {
         label: 'Spent',
-        data: personalCategoryData.map(item => item.spent),
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.5)',
-          'rgba(54, 162, 235, 0.5)',
-          'rgba(255, 205, 86, 0.5)',
-          'rgba(75, 192, 192, 0.5)',
-          'rgba(153, 102, 255, 0.5)',
-        ],
-        borderColor: [
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)',
-          'rgb(255, 205, 86)',
-          'rgb(75, 192, 192)',
-          'rgb(153, 102, 255)',
-        ],
+        data: allCategories.map(category => {
+          const categoryData = personalCategoryData.find(item => item.category === category);
+          return categoryData ? categoryData.spent : 0;
+        }),
+        backgroundColor: allCategories.map(category => categoryColors[category] || 'rgba(0, 0, 0, 0.5)'),
+        borderColor: allCategories.map(category => categoryColors[category] || 'rgba(0, 0, 0, 1)'),
         borderWidth: 1,
       },
     ],
@@ -211,13 +206,19 @@ const PersonalDashboard = () => {
     }
   };
 
+  // Define a mapping object for category colors
+
   // Carousel items
-  const carouselItems = personalCategoryData.map(item => ({
-    category: item.category,
-    spent: item.spent,
-    icon: getCategoryIcon(item.category),
-    bgColor: barData.datasets[0].backgroundColor[barLabels.indexOf(item.category)],
-  }));
+  // const allCategories = ['Food', 'Groceries', 'Transport', 'Health', 'Others'];
+  const carouselItems = allCategories.map(category => {
+    const categoryData = personalCategoryData.find(item => item.category === category);
+    return {
+      category: category,
+      spent: categoryData ? categoryData.spent : 0,
+      icon: getCategoryIcon(category),
+      bgColor: categoryColors[category] || 'transparent',
+    };
+  });
 
   const handlePrevClick = () => {
     setCurrentItem(prevItem => (prevItem === 0 ? carouselItems.length - 3 : prevItem - 1));
@@ -234,7 +235,15 @@ const PersonalDashboard = () => {
         {/* 1st Section  */}
         <div className="flex justify-evenly items-center mt-16 mb-16 ">
           {/* 1st Card  */}
-          <div className="card w-1/3 h-64 bg-[#E0E0E0] text-black">
+          {!totalSpent ? (<div className="card w-1/3 h-64 bg-[#E0E0E0] text-black">
+            <div className="card-body p-6">
+              <h2 className="mb-4 font-bold text-md">Insights</h2>
+              <div className="text-center flex items-center">
+                <img src="https://png.pngtree.com/png-vector/20220615/ourmid/pngtree-budget-financial-analyst-to-managing-or-planning-spending-money-at-checklist-png-image_5087670.png" className="w-52" alt="" />
+                <h2 className="text-xl font-[inter]">Add expense to see your insight</h2>
+              </div>
+            </div>
+          </div>) : (<div className="card w-1/3 h-64 bg-[#E0E0E0] text-black">
             <div className="card-body p-6">
               <h2 className="mb-4 font-bold text-md">Insights</h2>
               <div className="flex items-center justify-center space-x-6">
@@ -250,14 +259,14 @@ const PersonalDashboard = () => {
                     <div className='flex justify-between items-center  space-x-2'>
                       <div className='w-10 h-4' style={{ backgroundColor: "rgb(54, 162, 235)" }}></div>
                       <p className='font-[inter]'>Prev month</p>
-                    </div>   
+                    </div>
                   </div>
 
                   <h3 className="text-xl">{message}</h3>
                 </div>
               </div>
             </div>
-          </div>
+          </div>)}
 
           {/* 2nd Card  */}
           <div
@@ -268,23 +277,27 @@ const PersonalDashboard = () => {
               <div className="flex justify-between">
                 <h2 className="mb-4 font-bold text-md mb-2">Total Budget</h2>
                 <button className="btn bg-[#FEB852] text-white font-light border-none">
-                  {budgetData ? budgetData.month : 'Loading...'}
+                  {getCurrentMonth()}
                 </button>
               </div>
               <h2 className="mb-4 font-bold text-3xl">
-                {budgetData ? `Rs ${budgetData.budget}` : 'Loading...'}
+                {budgetData ? `Rs ${budgetData.budget}` : 'Rs 0'}
               </h2>
               <div className="flex justify-between ">
                 <div className="space-y-2">
                   <h4 className="text-[#777777]">Spent</h4>
                   <h4 className="text-success font-bold text-2xl">
-                    {totalSpent ? `Rs ${totalSpent}` : 'Loading...'}
+                    {totalSpent ? `Rs ${totalSpent}` : 'Rs 0'}
                   </h4>
                 </div>
                 <div className="divider divider-horizontal divider-error"></div>
                 <div className="space-y-2">
                   <h4 className="text-[#777777]">Spent Over Budget</h4>
-                  <h4 className="text-error font-bold text-2xl">Rs {totalSpent - (budgetData ? budgetData.budget : 0)}</h4>
+                  <h4 className="text-error font-bold text-2xl">
+                    Rs {totalSpent > budgetData.budget ? totalSpent - budgetData.budget : 0}
+                  </h4>
+
+
                 </div>
               </div>
             </div>
@@ -334,13 +347,15 @@ const PersonalDashboard = () => {
         </div>
 
         {/* 3rd Section - Bar Chart */}
-        <div className="mt-20 mb-20 flex item-center justify-center">
-          <div style={{ width: '60%' }}>
-            <Bar data={barData} />
+        {totalSpent !== 0 && (
+          <div className="mt-20 mb-20 flex item-center justify-center">
+            <div style={{ width: '60%' }}>
+              <Bar data={barData} />
+            </div>
           </div>
-        </div>
-      </div>
+        )}
 
+      </div>
       <Footer />
     </div>
   );
