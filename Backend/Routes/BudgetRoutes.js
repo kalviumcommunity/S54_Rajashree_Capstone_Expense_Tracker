@@ -9,7 +9,7 @@ budgetDataRoutes.get('/:id',getOneBudget)
 
 budgetDataRoutes.post('/post',addBudget)
 
-budgetDataRoutes.put('/:id', updateBudget)
+budgetDataRoutes.put('/put/:id', updateBudget)
 
 budgetDataRoutes.delete('/delete/:id',deleteBudget)
 
