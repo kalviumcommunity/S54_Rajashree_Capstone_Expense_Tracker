@@ -47,6 +47,7 @@ const Login = () => {
         setIsLoggedIn(true);
         setUserEmail(data.email);
         localStorage.setItem('userEmail', data.email);
+        localStorage.setItem('username', matchingUser.name);
         setUsername(matchingUser.name);
       } else {
         toast.error('Invalid email or password');

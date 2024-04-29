@@ -20,20 +20,27 @@ const PersonalDashboard = () => {
   const [budgetData, setBudgetData] = useState(0);
   const [personalCategoryData, setPersonalCategoryData] = useState([]);
   const { totalSpent, setTotalSpent } = useContext(AppContext);
-  const { userEmail, setUserEmail } = useContext(AppContext);
   const [message, setMessage] = useState('');
+  const { username,setUsername } = useContext(AppContext);
+  const { userEmail, setUserEmail } = useContext(AppContext);
 
+  useEffect(() => {
+    const userEmailFromLocalStorage = localStorage.getItem('userEmail');
+    const userNameFromLocalStorage = localStorage.getItem('username');
+    if (userEmailFromLocalStorage) {
+      setUserEmail(userEmailFromLocalStorage);
+    }
+    if (userNameFromLocalStorage) {
+      setUsername(userNameFromLocalStorage);
+    }
+
+  }, []);
+  
   useEffect(() => {
     fetchBudgetData();
     fetchPersonalCategoryData();
   }, [userEmail]);
 
-  useEffect(() => {
-    const userEmailFromLocalStorage = localStorage.getItem('userEmail');
-    if (userEmailFromLocalStorage) {
-      setUserEmail(userEmailFromLocalStorage);
-    }
-  }, []);
   
   useEffect(() => {
     fetchPreviousMonthData().then(totalPreviousMonth => {
@@ -233,7 +240,10 @@ const PersonalDashboard = () => {
       <PersonalNavbar />
       <div>
         {/* 1st Section  */}
-        <div className="flex justify-evenly items-center mt-16 mb-16 ">
+        <div>
+          <h2 className='text-3xl font-bold m-10 ml-44  '>{`Welcome back, ${username}!!`}</h2>
+        </div>
+        <div className="flex justify-evenly items-center mt-4 mb-10 ">
           {/* 1st Card  */}
           {!totalSpent ? (<div className="card w-1/3 h-64 bg-[#E0E0E0] text-black">
             <div className="card-body p-6">
@@ -307,9 +317,9 @@ const PersonalDashboard = () => {
         {/* 2nd Section  */}
         <div>
           <div className="flex flex-col relative">
-            <h2 className="text-black tracking-wider font-medium text-3xl mb-4 font-[itim] text-center">
+            {/* <h2 className="text-black tracking-wider font-medium text-2xl mb-4 text-center">
               Categories
-            </h2>
+            </h2> */}
             <div className="carousel carousel-center w-100 p-4 space-x-32 rounded-box relative">
               <button
                 className="prev-button absolute top-1/2 transform -translate-y-1/2 left-20 rounded-full"

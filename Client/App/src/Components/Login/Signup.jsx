@@ -33,6 +33,10 @@ const Signup = () => {
     try {
       await axios.post('https://s54-rajashree-capstone-expense-tracker.vercel.app/userdata/post', formData);
       setIsSignedUp(true);
+      console.log(formData.emailId)
+      console.log(formData.name)
+      localStorage.setItem('userEmail', formData.emailId);
+       localStorage.setItem('username', formData.name);
       toast.success('You have successfully created your account.', {
         onClose: () => {
           setFormData({ name: '', emailId: '', password: '' });
