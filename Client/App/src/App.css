@@ -78,3 +78,39 @@ h4 {
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
+/* Apply column borders to the table */
+table {
+  border-collapse: collapse;
+  border:2px solid #36a2eb;
+}
+
+ td {
+  border: 2px solid #e0e0e0;
+  padding: 20px; /* Adjust padding as needed */
+}
+
+thead {
+  background-color: #36a2eb;
+  color: white;
+  font-size: 20px;
+}
+
+th {
+  width: 200px;
+  height: 100px;
+}
+
+.nameTable {
+  width: 250px;
+  text-align: center;
+}
+
+.red{
+  color: red;
+  font-weight: bold;
+}
+
+.green{
+  color: green;
+  font-weight: bold;
+}
