@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+  import React, { useState } from 'react';
 import logo from '../../assets/Cashtrackrr-logo.png';
 import { Link } from 'react-router-dom';
 
@@ -19,6 +19,7 @@ const Navbar = () => {
             <li className='text-xl '><a >Contact</a></li>
           </ul>
         </div>
+
         <div className="navbar-end hidden lg:flex space-x-6">
           <Link to="/login">
             <button className="btn bg-transparent border border-black w-26" style={{ borderWidth: "3px", color: "black", fontFamily: "'Itim', sans-serif" }}>L O G I N</button>

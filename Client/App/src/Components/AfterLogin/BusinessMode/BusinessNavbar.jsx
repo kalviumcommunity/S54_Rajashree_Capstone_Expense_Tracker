@@ -42,7 +42,9 @@ const BusinessNavbar = () => {
             <Link to="/businessDashboard">
               <li className='text-xl '><a>Dashboard</a></li>
             </Link>
+            <Link to="/businessExpense">
               <li className='text-xl '><a>Add Expense</a></li>
+            </Link>
               <li className='text-xl'><a>EMI calculator</a></li>
           </ul>
         </div>

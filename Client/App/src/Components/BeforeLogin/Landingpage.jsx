@@ -24,9 +24,9 @@ const TypewriterText = ({ text }) => {
   }, [text]);
 
   return (
-    <h1 className="typewriter text-3xl md:text-4xl font-bold font-[inter] mb-4" style={{ color: '#FF7545' }}>
+    <h2 className="typewriter text-3xl md:text-4xl font-bold mb-4" style={{ color: '#FF7545' }}>
       {displayText}
-    </h1>
+    </h2>
   );
 };
 
@@ -48,12 +48,13 @@ const Landingpage = () => {
           <button className="btn btn-primary text-white border-none px-6" style={{ backgroundColor: '#FF7545', fontFamily: "'Istok Web', sans-serif" }}>Explore </button>
         </div>
         <div>
-          <img src={homeBg} alt="CashTrackrr" className="w-full max-w-md md:max-w-none" />
+          {/* <img src={homeBg} alt="CashTrackrr" className="w-full  max-w-md md:max-w-none" /> */}
+          <img src={homeBg} alt="CashTrackrr" style={{ width: "700px" }} />
         </div>
       </div>
       {/* SECOND PAGE */}
       <div className="px-4 md:px-0">
-        <h1 className="md:text-3xl font-bold text-center" style={{ color: '#6193F6', fontFamily: 'Istok Web' }}>Why CashTrackrr?</h1>
+        <h2 className="md:text-3xl font-bold text-center" style={{ color: '#6193F6' }}>Features</h2>
         {/* first */}
         <div className="flex flex-col md:flex-row justify-evenly items-center align-center">
           <div className="flex flex-col justify-evenly py-8 md:py-20">
@@ -87,7 +88,7 @@ const Landingpage = () => {
       </div>
       {/* Third Page */}
       <div className="mt-24 mb-24">
-        <h1 className="md:text-3xl font-bold text-center" style={{ color: '#FF7545', fontFamily: 'Istok Web' }}>How to Use?</h1>
+        <h2 className="md:text-3xl font-bold text-center" style={{ color: '#FF7545' }}>How to Use?</h2>
         <div className="flex justify-center mt-8">
           <ul className="steps steps-vertical text-lg font-medium">
             <li className="step step-primary" style={{ marginBottom: '15px' }}>Create an account or log in to your existing account</li>
