@@ -11,6 +11,8 @@ import PersonalExpense from './Components/AfterLogin/PersonalMode/PersonalExpens
 import Notification from './Components/AfterLogin/PersonalMode/Notification'
 
 import BusinessDashboard from './Components/AfterLogin/BusinessMode/BusinessDashboard'
+import TransactionHistory from './Components/AfterLogin/BusinessMode/TransactionHistory'
+import BusinessExpense from './Components/AfterLogin/BusinessMode/BusinessExpense'
 
 function App() {
 
@@ -26,6 +28,8 @@ function App() {
         <Route path='/personalExpense' element={<PersonalExpense/>}></Route>
 
         <Route path='businessDashboard' element={<BusinessDashboard/>}></Route>
+        <Route path='businessExpense' element={<BusinessExpense/>}></Route>
+        <Route path='transactionHistory' element={<TransactionHistory/>}></Route>
      </Routes>
     </>
   )

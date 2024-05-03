@@ -264,11 +264,11 @@ const PersonalDashboard = () => {
                   <div className='space-y-2 flex items-center space-x-4 '>
                     <div className='flex justify-between items-center pt-2 space-x-2'>
                       <div className='w-10 h-4' style={{ backgroundColor: "rgb(255, 99, 132)" }}></div>
-                      <p className='font-[inter]'>This month</p>
+                      <p className='font-[inter]'>Prev month</p>
                     </div>
                     <div className='flex justify-between items-center  space-x-2'>
                       <div className='w-10 h-4' style={{ backgroundColor: "rgb(54, 162, 235)" }}></div>
-                      <p className='font-[inter]'>Prev month</p>
+                      <p className='font-[inter]'>This month</p>
                     </div>
                   </div>
 

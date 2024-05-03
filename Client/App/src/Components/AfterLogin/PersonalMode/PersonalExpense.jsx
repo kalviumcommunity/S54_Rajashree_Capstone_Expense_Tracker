@@ -27,6 +27,7 @@ const PersonalExpense = () => {
         date: '',
     });
     const [budget, setBudget] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     const [selectedDate, setSelectedDate] = useState(() => {
         // Initialize selectedDate from localStorage if available
@@ -48,10 +49,9 @@ const PersonalExpense = () => {
         }
     }, [userEmail]);
 
-
-
     const fetchData = async () => {
         try {
+            setLoading(true);
             const response = await axios.get('https://s54-rajashree-capstone-expense-tracker.vercel.app/personal');
             const filteredData = response.data.filter(item => item.email === userEmail);
             const filteredByDate = selectedDate
@@ -64,9 +64,11 @@ const PersonalExpense = () => {
                 : filteredData;
             setExpenseData(filteredByDate);
             console.log('Data fetched for date:', selectedDate ? `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}` : 'All dates');
+            setLoading(false);
         } catch (error) {
             console.error('Error fetching personal data:', error);
             toast.error('Failed to fetch personal data. Please try again later.');
+            setLoading(false);
         }
     };
 
@@ -182,7 +184,6 @@ const PersonalExpense = () => {
         <div>
             <PersonalNavbar />
             <div>
-                {/* 1st section */}
                 <div className='flex items-center justify-evenly bg-[#5E60CE] py-10'>
                     <div className="card flex flex-row rounded-box w-96 bg-white shadow-xl w-1/2">
                         <div className="flex flex-row items-center justify-center card-body">
@@ -209,12 +210,9 @@ const PersonalExpense = () => {
                     </div>
                 </div>
 
-                {/* 2nd section */}
                 <div>
-                    {/* expense heading */}
                     <h2 className='text-3xl font-semibold text-center py-10'>Expenses</h2>
 
-                    {/* filter by date */}
                     <div className='flex justify-center space-x-20 items-center py-2 px-28'>
                         <div>
                             <h2 className='text-[#6930C3] font-bold text-2xl'>Filter by date   :</h2>
@@ -230,20 +228,61 @@ const PersonalExpense = () => {
                         </div>
                     </div>
 
-                    {/* Expense div */}
-                    <div className='flex flex-col items-center justify-center mx-auto'>
-                        {selectedDate ? (
-                            // If a date is selected, display filtered expenses
-                            expenseData.length > 0 ? (
-                                // If there are expenses for the selected date, display them
+                    {loading ? (
+                        <div className="flex justify-center items-center" style={{height:"50vh"}}>
+                            <span className="loading loading-spinner loading-lg"></span>
+                        </div>
+                    ) : (
+                        <div className='flex flex-col items-center justify-center mx-auto'>
+                            {selectedDate ? (
+                                expenseData.length > 0 ? (
+                                    sortedDates.map(date => (
+                                        <details key={date} className="collapse bg-white" open={true}>
+                                            <summary className="collapse-title  ml-16 text-2xl font-medium ">
+                                                <ArrowRightIcon style={{ fontSize: "40px" }} />
+                                                {date}
+                                            </summary>
+                                            <div className="flex flex-wrap items-center space-x-4 px-20 justify-flex-start collapse-content space-y-6 max-height-400">
+                                                {Object.entries(groupedExpenses[date].reduce((acc, expense) => {
+                                                    if (!acc[expense.category]) {
+                                                        acc[expense.category] = {
+                                                            category: expense.category,
+                                                            totalSpent: 0
+                                                        };
+                                                    }
+                                                    acc[expense.category].totalSpent += parseFloat(expense.spent || 0);
+                                                    return acc;
+                                                }, {})).map(([category, { totalSpent }]) => (
+                                                    <div key={category} className="card bg-white-100 shadow-lg w-64 image-full mt-6 hover:bg-black">
+                                                        {category === 'Food' && <figure><img src="https://clicklovegrow.com/wp-content/uploads/2020/03/Naomi-Sherman-Advanced-Graduate4.jpg" alt="Food" /></figure>}
+                                                        {category === 'Groceries' && <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGvxFbd7yJqcvVLdhu0Z3MUdwhJOl_erAmd5Y0gt7KoA&s" alt="Groceries" /></figure>}
+                                                        {category === 'Transport' && <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfT97PUyOW2CEJ-OzozmTK14ZGeXjc9V4Ao7wdEx1dnw&s" alt="Transport" /></figure>}
+                                                        {category === 'Health' && <figure><img src="https://img.freepik.com/premium-photo/heart-stethoscope-generate-ai_98402-13285.jpg" alt="Health" /></figure>}
+                                                        {category === 'Others' && <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoFVUazypGswhWPcBAY65cbP8rg89oAqm1lg&s" alt="Others" /></figure>}
+                                                        <div className="card-body flex justify-center items-center space-y-10">
+                                                            {category === 'Food' && <RamenDiningIcon style={{ fontSize: "100px", color: "white" }} />}
+                                                            {category === 'Groceries' && <LocalGroceryStoreIcon style={{ fontSize: "100px", color: "white" }} />}
+                                                            {category === 'Transport' && <CommuteIcon style={{ fontSize: "100px", color: "white" }} />}
+                                                            {category === 'Health' && <HealthAndSafetyIcon style={{ fontSize: "100px", color: "white" }} />}
+                                                            {category === 'Others' && <MiscellaneousServicesIcon style={{ fontSize: "100px", color: "white" }} />}
+                                                            <h2 className="text-xl card-title text-white">Total Money Spent: Rs {totalSpent.toFixed(2)} </h2>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </details>
+                                    ))
+                                ) : (
+                                    <img src='https://cdn.dribbble.com/users/1138875/screenshots/4669703/404_animation.gif'></img>
+                                )
+                            ) : (
                                 sortedDates.map(date => (
                                     <details key={date} className="collapse bg-white" open={true}>
                                         <summary className="collapse-title  ml-16 text-2xl font-medium ">
                                             <ArrowRightIcon style={{ fontSize: "40px" }} />
                                             {date}
                                         </summary>
-                                        <div className="flex flex-wrap items-center space-x-4 px-20 justify-flex-start collapse-content space-y-6 max-height-400">
-                                            {/* Group expenses by category */}
+                                        <div className="flex flex-wrap items-center space-x-4 px-16 justify-flex-start collapse-content space-y-6 max-height-400">
                                             {Object.entries(groupedExpenses[date].reduce((acc, expense) => {
                                                 if (!acc[expense.category]) {
                                                     acc[expense.category] = {
@@ -254,15 +293,13 @@ const PersonalExpense = () => {
                                                 acc[expense.category].totalSpent += parseFloat(expense.spent || 0);
                                                 return acc;
                                             }, {})).map(([category, { totalSpent }]) => (
-                                                <div key={category} className="card bg-white-100 shadow-lg w-64 image-full mt-6 hover:bg-black">
-                                                    {/* Display category and total amount spent */}
+                                                <div key={category} className="card ml-4 mr-4 bg-white-100 shadow-lg w-64 image-full mt-6 hover:bg-black">
                                                     {category === 'Food' && <figure><img src="https://clicklovegrow.com/wp-content/uploads/2020/03/Naomi-Sherman-Advanced-Graduate4.jpg" alt="Food" /></figure>}
                                                     {category === 'Groceries' && <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGvxFbd7yJqcvVLdhu0Z3MUdwhJOl_erAmd5Y0gt7KoA&s" alt="Groceries" /></figure>}
                                                     {category === 'Transport' && <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfT97PUyOW2CEJ-OzozmTK14ZGeXjc9V4Ao7wdEx1dnw&s" alt="Transport" /></figure>}
                                                     {category === 'Health' && <figure><img src="https://img.freepik.com/premium-photo/heart-stethoscope-generate-ai_98402-13285.jpg" alt="Health" /></figure>}
                                                     {category === 'Others' && <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoFVUazypGswhWPcBAY65cbP8rg89oAqm1lg&s" alt="Others" /></figure>}
                                                     <div className="card-body flex justify-center items-center space-y-10">
-                                                        {/* Icons for each category */}
                                                         {category === 'Food' && <RamenDiningIcon style={{ fontSize: "100px", color: "white" }} />}
                                                         {category === 'Groceries' && <LocalGroceryStoreIcon style={{ fontSize: "100px", color: "white" }} />}
                                                         {category === 'Transport' && <CommuteIcon style={{ fontSize: "100px", color: "white" }} />}
@@ -275,58 +312,14 @@ const PersonalExpense = () => {
                                         </div>
                                     </details>
                                 ))
-                            ) : (
-                                // If no expenses are available for the selected date, display a message
-                                // <p>No expenses available for the selected date.</p>
-                                <img src='https://cdn.dribbble.com/users/1138875/screenshots/4669703/404_animation.gif'></img>
-                            )
-                        ) : (
-                            // If no date is selected, display all expenses
-                            sortedDates.map(date => (
-                                <details key={date} className="collapse bg-white" open={true}>
-                                    <summary className="collapse-title  ml-16 text-2xl font-medium ">
-                                        <ArrowRightIcon style={{ fontSize: "40px" }} />
-                                        {date}
-                                    </summary>
-                                    <div className="flex flex-wrap items-center space-x-4 px-16 justify-flex-start collapse-content space-y-6 max-height-400">
-                                        {/* Group expenses by category */}
-                                        {Object.entries(groupedExpenses[date].reduce((acc, expense) => {
-                                            if (!acc[expense.category]) {
-                                                acc[expense.category] = {
-                                                    category: expense.category,
-                                                    totalSpent: 0
-                                                };
-                                            }
-                                            acc[expense.category].totalSpent += parseFloat(expense.spent || 0);
-                                            return acc;
-                                        }, {})).map(([category, { totalSpent }]) => (
-                                            <div key={category} className="card ml-4 mr-4 bg-white-100 shadow-lg w-64 image-full mt-6 hover:bg-black">
-                                                {/* Display category and total amount spent */}
-                                                {category === 'Food' && <figure><img src="https://clicklovegrow.com/wp-content/uploads/2020/03/Naomi-Sherman-Advanced-Graduate4.jpg" alt="Food" /></figure>}
-                                                {category === 'Groceries' && <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGvxFbd7yJqcvVLdhu0Z3MUdwhJOl_erAmd5Y0gt7KoA&s" alt="Groceries" /></figure>}
-                                                {category === 'Transport' && <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfT97PUyOW2CEJ-OzozmTK14ZGeXjc9V4Ao7wdEx1dnw&s" alt="Transport" /></figure>}
-                                                {category === 'Health' && <figure><img src="https://img.freepik.com/premium-photo/heart-stethoscope-generate-ai_98402-13285.jpg" alt="Health" /></figure>}
-                                                {category === 'Others' && <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoFVUazypGswhWPcBAY65cbP8rg89oAqm1lg&s" alt="Others" /></figure>}
-                                                <div className="card-body flex justify-center items-center space-y-10">
-                                                    {/* Icons for each category */}
-                                                    {category === 'Food' && <RamenDiningIcon style={{ fontSize: "100px", color: "white" }} />}
-                                                    {category === 'Groceries' && <LocalGroceryStoreIcon style={{ fontSize: "100px", color: "white" }} />}
-                                                    {category === 'Transport' && <CommuteIcon style={{ fontSize: "100px", color: "white" }} />}
-                                                    {category === 'Health' && <HealthAndSafetyIcon style={{ fontSize: "100px", color: "white" }} />}
-                                                    {category === 'Others' && <MiscellaneousServicesIcon style={{ fontSize: "100px", color: "white" }} />}
-                                                    <h2 className="text-xl card-title text-white">Total Money Spent: Rs {totalSpent.toFixed(2)} </h2>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </details>
-                            ))
-                        )}
-                    </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+            </div>
+            {/* Modal button and form */}
 
-                    {/* Modal button and form */}
-
-                    <button
+            <button
                         className="btn border-none fixed bottom-4 rounded-full right-10 bg-[#5E60CE]"
                         onClick={() => {
                             document.getElementById('my_modal_3').showModal();
@@ -390,10 +383,8 @@ const PersonalExpense = () => {
                             </div>
                         </div>
                     </dialog>
-                </div>
-            </div>
-            <Footer />
             <ToastContainer />
+            <Footer />
         </div>
     );
 };
