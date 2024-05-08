@@ -6,6 +6,7 @@ const cors = require("cors");
 const userDataRoutes = require("./Routes/UserRouter");
 const personalDataRoutes = require("./Routes/PersonalRoutes");
 const budgetDataRoutes = require("./Routes/BudgetRoutes");
+const businessUserRoutes = require("./Routes/BusinessUserRoute");
 
 const app = express();
 const PORT = 3000;
@@ -25,9 +26,9 @@ async function connectDatabase() {
 
 connectDatabase();
 
-// app.get("/", (req, res) => {
-//     res.send("Welcome to Cashtrackrr");
-// });
+app.get("/", (req, res) => {
+    res.send("Welcome to Cashtrackrr");
+});
 
 app.get("/ping", (req, res) => {
     res.send("Welcome to Cashtrackrr, your all-in-one solution for tracking your expenses.");
@@ -37,6 +38,7 @@ app.get("/ping", (req, res) => {
 app.use('/userdata', userDataRoutes);
 app.use('/personal', personalDataRoutes);
 app.use('/budget', budgetDataRoutes);
+app.use('/business', businessUserRoutes);
 
 
 app.use((err, req, res, next) => {
