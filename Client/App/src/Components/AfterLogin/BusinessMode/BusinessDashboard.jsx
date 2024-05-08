@@ -23,7 +23,7 @@ const BusinessDashboard = () => {
             setUsername(userNameFromLocalStorage);
         }
     
-        axios.get('http://localhost:3000/business')
+        axios.get('https://s54-rajashree-capstone-expense-tracker.vercel.app/business')
             .then(response => {
                 console.log('Fetched data:', response.data); 
                 // Filter the data to find the business object with the matching email
