@@ -7,6 +7,7 @@ const userDataRoutes = require("./Routes/UserRouter");
 const personalDataRoutes = require("./Routes/PersonalRoutes");
 const budgetDataRoutes = require("./Routes/BudgetRoutes");
 const businessUserRoutes = require("./Routes/BusinessUserRoute");
+const transactionRoutes = require("./Routes/TransactionRoutes");
 
 const app = express();
 const PORT = 3000;
@@ -39,6 +40,7 @@ app.use('/userdata', userDataRoutes);
 app.use('/personal', personalDataRoutes);
 app.use('/budget', budgetDataRoutes);
 app.use('/business', businessUserRoutes);
+app.use('/transaction', transactionRoutes);
 
 
 app.use((err, req, res, next) => {
