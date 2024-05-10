@@ -31,7 +31,7 @@ const BusinessNavbar = () => {
             </div>
             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white-100 text-black rounded-box w-52">
               <li><a>Dashboard</a></li>
-              <li><a>Add Expense</a></li>
+              <li><a>Add User</a></li>
               <li><a>EMI calculator</a></li>
             </ul>
           </div>
@@ -43,7 +43,7 @@ const BusinessNavbar = () => {
               <li className='text-xl '><a>Dashboard</a></li>
             </Link>
             <Link to="/businessExpense">
-              <li className='text-xl '><a>Add Expense</a></li>
+              <li className='text-xl '><a>Add User</a></li>
             </Link>
               <li className='text-xl'><a>EMI calculator</a></li>
           </ul>
