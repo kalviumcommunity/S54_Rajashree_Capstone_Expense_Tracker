@@ -20,9 +20,9 @@ const TransactionHistory = () => {
         description: ""
     });
     const [transactions, setTransactions] = useState([]);
-    const [selectedTransaction, setSelectedTransaction] = useState(null); 
+    const [selectedTransaction, setSelectedTransaction] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [paidTotal, setPaidTotal] = useState(0); 
+    const [paidTotal, setPaidTotal] = useState(0);
     const [receivedTotal, setReceivedTotal] = useState(0);
 
     const [showAllTransactions, setShowAllTransactions] = useState(false);
@@ -30,17 +30,22 @@ const TransactionHistory = () => {
         setShowAllTransactions(true);
     };
 
-    const [user, setUser] = useState(""); 
+    const [user, setUser] = useState("");
     const [customer, setCustomer] = useState("");
+    const [originalTransactions, setOriginalTransactions] = useState([]);
+    const [isFiltered, setIsFiltered] = useState(false);
+    const [filterStatus, setFilterStatus] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
 
     useEffect(() => {
         axios.get(`https://s54-rajashree-capstone-expense-tracker.vercel.app/business`)
             .then(response => {
-               
+
                 const userData = response.data.find(user => user.email === userEmail);
                 setUser(userData._id);
 
-                
+
                 const customerData = userData.customers.find(customer => customer.name === customerName && customer.category === categoryName);
                 setCustomer(customerData._id);
             })
@@ -91,8 +96,9 @@ const TransactionHistory = () => {
 
                         const sortedTransactions = matchedCustomer ? matchedCustomer.transactions.sort((a, b) => new Date(b.date) - new Date(a.date)) : [];
                         setTransactions(sortedTransactions);
+                        setOriginalTransactions(sortedTransactions);
 
-                      
+
                         let paidSum = 0;
                         let receivedSum = 0;
                         sortedTransactions.forEach(transaction => {
@@ -199,6 +205,13 @@ const TransactionHistory = () => {
             });
     };
 
+    const handleResetFilters = () => {
+        setFilterStatus('');
+        setStartDate('');
+        setEndDate('');
+        setTransactions(originalTransactions);
+    };
+
     const handleCloseModal = () => {
         setFormData({
             date: "",
@@ -209,6 +222,42 @@ const TransactionHistory = () => {
         setSelectedTransaction(null);
         document.getElementById('my_modal_3').close();
     };
+
+    const handleFilterChange = (e) => {
+        const { name, value } = e.target;
+        if (name === 'status') {
+            setFilterStatus(value);
+        } else if (name === 'startDate') {
+            setStartDate(value);
+        } else if (name === 'endDate') {
+            setEndDate(value);
+        }
+    };
+
+    const handleApplyFilters = () => {
+        setIsFiltered(true);
+        const filteredData = originalTransactions.filter((transaction) => {
+            const transactionDate = new Date(transaction.date);
+            const startDateFilter = startDate ? new Date(startDate) : null;
+            const endDateFilter = endDate ? new Date(endDate) : null;
+    
+            if (filterStatus === 'all') {
+                return (
+                    (!startDateFilter || transactionDate >= startDateFilter) &&
+                    (!endDateFilter || transactionDate <= endDateFilter)
+                );
+            } else {
+                return (
+                    transaction.status.toLowerCase() === filterStatus &&
+                    (!startDateFilter || transactionDate >= startDateFilter) &&
+                    (!endDateFilter || transactionDate <= endDateFilter)
+                );
+            }
+        });
+        setTransactions(filteredData);
+    };
+
+    const filteredTransactions = transactions;
 
     return (
         <div style={{ height: transactions.length <= 2 ? "100vh" : "100%", backgroundColor: "#f7f9fc" }}>
@@ -226,9 +275,21 @@ const TransactionHistory = () => {
                                 <label className="input input-bordered m-2 flex items-center border border-1 border-black gap-4 bg-white text-black">
                                     <CalendarMonth />
                                     <div className='divider divider-horizontal divider-neutral'></div>
-                                    <input type="date" className='bg-white border-black ' />
+                                    <input
+                                        type="date"
+                                        className='bg-white border-black'
+                                        name="startDate"
+                                        value={startDate}
+                                        onChange={handleFilterChange}
+                                    />
                                     <div className='divider divider-horizontal divider-neutral'></div>
-                                    <input type="date" className='bg-white border-black' />
+                                    <input
+                                        type="date"
+                                        className='bg-white border-black'
+                                        name="endDate"
+                                        value={endDate}
+                                        onChange={handleFilterChange}
+                                    />
                                 </label>
                             </div>
                         </div>
@@ -237,8 +298,10 @@ const TransactionHistory = () => {
                             <select
                                 className='bg-white input input-bordered border-black px-10'
                                 name="status"
+                                value={filterStatus}
+                                onChange={handleFilterChange}
                             >
-                                <option value="" disabled selected>
+                                <option value="" disabled>
                                     Select status ▼
                                 </option>
                                 <option value="all">All</option>
@@ -246,13 +309,14 @@ const TransactionHistory = () => {
                                 <option value="received">Received</option>
                             </select>
                         </div>
-                        <div>
-                            <div className='btn bg-success text-white border-none mt-6'>Apply Changes</div>
+                        <div className=' space-x-4'>
+                            <div className='btn bg-success text-white border-none mt-6' onClick={handleApplyFilters}>Apply Changes</div>
+                            <div className='btn bg-white text-success border-success border-2 mt-6' onClick={handleResetFilters}>Reset</div>
                         </div>
                     </div>
                     <div className='flex justify-between items-center px-24 py-10'>
                         <h2 className='text-2xl font-semibold '> Transactions</h2>
-                        {transactions.length >= 4 && !showAllTransactions && (
+                        {filteredTransactions.length >= 4 && !showAllTransactions && (
                             <h2 className='btn btn-success text-white ' onClick={handleSeeAllClick}> See all</h2>
                         )}
                     </div>
@@ -275,11 +339,11 @@ const TransactionHistory = () => {
                                             <tr>
                                                 <td colSpan="6" className="text-center py-4">Loading...</td>
                                             </tr>
-                                        ) : transactions.length === 0 ? (
+                                        ) : filteredTransactions.length === 0 ? (
                                             <tr>
                                                 <td colSpan="6" className="text-center py-4">No transactions available. Add a transaction to see the history.</td>
                                             </tr>
-                                        ) : transactions.slice(0, showAllTransactions ? transactions.length : 3).map((transaction, index) => (
+                                        ) : filteredTransactions.slice(0, showAllTransactions ? filteredTransactions.length : 3).map((transaction, index) => (
                                             <React.Fragment key={index}>
                                                 <tr className={`bg-white border-2 border-[#a3a3a3] ${transaction.status === 'Paid' ? 'text-error' : 'text-success'}`}>
                                                     <td>
