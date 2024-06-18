@@ -17,7 +17,9 @@ const BusinessExpense = () => {
     });
     const [businessData, setBusinessData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('');
     const [loading, setLoading] = useState(false);
+    const [filtered, setFiltered] = useState(false);
 
     useEffect(() => {
         const userEmailFromLocalStorage = localStorage.getItem('userEmail');
@@ -45,9 +47,17 @@ const BusinessExpense = () => {
         }));
     };
 
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const handleCategoryChange = (e) => {
+        setSelectedCategory(e.target.value);
+    };
+
     const handleFormSubmit = (e) => {
         e.preventDefault();
-    
+
         const dataToPost = {
             ...formData,
             email: userEmail,
@@ -55,7 +65,7 @@ const BusinessExpense = () => {
             received: 0,
             balance: 0
         };
-    
+
         axios.post('https://s54-rajashree-capstone-expense-tracker.vercel.app/business/post', dataToPost)
             .then(response => {
                 toast.success("User added");
@@ -71,7 +81,6 @@ const BusinessExpense = () => {
                 console.log(dataToPost);
             });
     };
-    
 
     const handleCardClick = (userId, customerName, category) => {
         console.log('Customer Name:', customerName);
@@ -100,40 +109,48 @@ const BusinessExpense = () => {
             });
     };
 
+    const handleSearch = () => {
+        setFiltered(true);
+    };
 
-    const filteredData = businessData.filter(item =>
-        item.email === userEmail &&
-        item.customers.some(customer =>
-            customer.name.toLowerCase().includes(searchTerm.toLowerCase())
-        )
+    const handleReset = () => {
+        setSearchTerm('');
+        setSelectedCategory('');
+        setFiltered(false);
+    };
+
+    const filteredData = businessData.filter(item => item.email === userEmail && 
+        (filtered && selectedCategory ? item.customers.some(customer => customer.category === selectedCategory) : true)
     );
 
     const customerCount = businessData.filter(item => item.email === userEmail)
         .reduce((total, item) => total + item.customers.length, 0);
 
-    console.log(customerCount)
+    console.log(customerCount);
 
     return (
-        <div style={{ height: customerCount <2 ? "100vh" : "100%" }}>
+        <div style={{ height: customerCount < 2 ? "100vh" : "100%" }}>
             <div>
                 <BusinessNavbar />
             </div>
             <div>
                 <div className='flex items-center justify-between mx-16 my-10'>
                     <div className='flex items-center space-x-2'>
-                        <label className="input input-bordered border-2 border-black text-black flex items-center gap-2 bg-[#f1efef] text-black ">
+                        <label className="input input-bordered border-2 border-black text-black flex items-center gap-2 bg-[#f1efef] text-black">
                             <input
                                 type="text"
                                 className="grow"
                                 placeholder="Search by name"
+                                value={searchTerm}
+                                onChange={handleSearchChange}
                             />
                         </label>
                         <label className="text-xl pb-2" htmlFor=""></label>
                         <select
-                            className='input input-bordered flex items-center border-2 border-black bg-[#f1efef] text-black '
+                            className='input input-bordered flex items-center border-2 border-black bg-[#f1efef] text-black'
                             name="category"
-                            value={formData.category}
-                            onChange={handleInputChange}
+                            value={selectedCategory}
+                            onChange={handleCategoryChange}
                         >
                             <option value="" disabled selected>
                                 Select a category ▼
@@ -144,7 +161,8 @@ const BusinessExpense = () => {
                             <option value="Loan">Loan</option>
                         </select>
 
-                        <button className='h-10 btn bg-success text-white border-none'>Search <SearchOutlined /></button>
+                        <button className='h-10 btn bg-success text-white border-none' onClick={handleSearch}>Search <SearchOutlined /></button>
+                        <button className='h-10 btn border border-2 border-success text-success bg-white' onClick={handleReset}>Reset</button>
                     </div>
 
                     <div>
@@ -158,35 +176,38 @@ const BusinessExpense = () => {
                     <div className="flex justify-center items-center" style={{ height: "60vh" }}>
                         <span className="loading loading-spinner loading-lg"></span>
                     </div>
-                ) : filteredData.length === 0 ? (
+                ) : filtered && filteredData.length === 0 ? (
                     <div className="flex justify-center items-center">
-                        <h2 className="text-2xl text-gray-600">No users available. Add a user to see transactions.</h2>
+                        <h2 className="text-2xl text-gray-600">No users found matching the criteria.</h2>
                     </div>
                 ) : (
                     <div className='m-20 mt-16 flex flex-col space-y-20 justify-center items-center'>
-                        {filteredData.map((userData) => (
+                        {(filtered ? filteredData : businessData.filter(item => item.email === userEmail)).map((userData) => (
                             <div className="w-5/6 space-y-10" key={userData._id}>
                                 {Object.entries(userData.customers.reduce((acc, customer) => {
-                                    acc[customer.category] = acc[customer.category] || [];
-                                    acc[customer.category].push(customer);
+                                    if (!filtered || 
+                                        (selectedCategory && customer.category === selectedCategory) || 
+                                        (searchTerm && customer.name.toLowerCase().includes(searchTerm.toLowerCase()))) {
+                                        acc[customer.category] = acc[customer.category] || [];
+                                        acc[customer.category].push(customer);
+                                    }
                                     return acc;
                                 }, {})).map(([category, customers]) => (
-                                    <div key={category} className="card w-full p-10 bg-white text-black border space-y-4 " style={{ boxShadow: "2px 2px 10px 2px #00000050" }}>
-                                        <button className='text-left btn no-animation text-xl text-black w-44 mb-4 bg-white'>{category} ({customers.length}) </button>
+                                    <div key={category} className="card w-full p-10 bg-white text-black border space-y-4" style={{ boxShadow: "2px 2px 10px 2px #00000050" }}>
+                                        <button className='text-left btn no-animation text-xl text-black w-44 mb-4 bg-white'>{category} ({customers.length})</button>
                                         {customers.map((customer) => (
                                             <div key={customer._id} className="card-compact py-6 bg-white border-2 border-success flex flex-row justify-between items-center rounded pl-28 pr-28">
-                                            <div className='flex space-x-4 items-center'>
-                                                <AccountCircleRounded style={{ fontSize: "30px" }} />
-                                                <h2 className='text-xl'>{customer.name}</h2>
-                                            </div>
-                                            <div className='flex space-x-4 items-center'>
-                                            <h2 className='text-xl pr-20'> Balance: <span className={customer.balance < 0 ? 'text-error font-bold' : 'text-success font-bold'}> Rs {customer.balance}</span></h2>
+                                                <div className='flex space-x-4 items-center'>
+                                                    <AccountCircleRounded style={{ fontSize: "30px" }} />
+                                                    <h2 className='text-xl'>{customer.name}</h2>
+                                                </div>
+                                                <div className='flex space-x-4 items-center'>
+                                                    <h2 className='text-xl pr-20'>Balance: <span className={customer.balance < 0 ? 'text-error font-bold' : 'text-success font-bold'}>Rs {customer.balance}</span></h2>
 
-                                                <History onClick={() => handleCardClick(userData._id, customer.name, customer.category)} style={{ fontSize: "30px" }} />
-                                                <DeleteForeverOutlined onClick={() => handleDelete(userData._id, customer._id)} style={{ fontSize: "30px" }} />
+                                                    <History onClick={() => handleCardClick(userData._id, customer.name, customer.category)} style={{ fontSize: "30px" }} />
+                                                    <DeleteForeverOutlined onClick={() => handleDelete(userData._id, customer._id)} style={{ fontSize: "30px" }} />
+                                                </div>
                                             </div>
-                                        </div>
-                                        
                                         ))}
                                     </div>
                                 ))}
@@ -197,14 +218,14 @@ const BusinessExpense = () => {
 
                 <dialog id="my_modal_3" className="modal">
                     <div className="modal-box bg-white">
-                        {/* Form close button  */}
+                        {/* Form close button */}
                         <form method="dialog">
                             <button className="btn text-xl btn-circle btn-ghost absolute right-8 top-10">✕</button>
                         </form>
 
-                        {/* Form inputs  */}
+                        {/* Form inputs */}
                         <div className='flex justify-center'>
-                            <form onSubmit={handleFormSubmit} className='flex w-3/4  flex-col' >
+                            <form onSubmit={handleFormSubmit} className='flex w-3/4  flex-col'>
                                 <h2 className='font-bold text-center text-success text-3xl py-10'>Add User</h2>
                                 <label className="text-xl pb-2" htmlFor="">Enter User name </label>
                                 <input
