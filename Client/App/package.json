@@ -17,6 +17,7 @@
     "@popperjs/core": "^2.11.8",
     "aos": "^2.3.4",
     "axios": "^1.6.8",
+    "bcryptjs": "^2.4.3",
     "bootstrap-icons": "^1.11.3",
     "chart.js": "^4.4.2",
     "framer-motion": "^11.0.25",
