@@ -17,10 +17,6 @@ CashTrackrr is a versatile financial management app designed to streamline both 
 1. **Transaction History:** Users can record transactions with business contacts, detailing amounts paid or received. This feature provides a comprehensive view of financial interactions with each person.
 2. **Filterable Dashboard:** A customizable dashboard with filter options allows users to view transaction history based on specific criteria such as date, category, or contact, ensuring a clear understanding of business finances.
 
-### Additional Feature:
-
-- **Loan Interest Calculator:** An integrated calculator assists in determining loan interest, helping users make informed financial decisions.
-
 ## Why CashTrackrr:
 
 - **User-Friendly Interface:** CashTrackrr offers an intuitive interface for easy navigation, ensuring accessibility for users of all backgrounds.
@@ -32,10 +28,15 @@ CashTrackrr is a versatile financial management app designed to streamline both 
 
 CashTrackrr caters to individuals seeking a comprehensive yet user-friendly solution to manage both personal and business expenses. It is suitable for freelancers, small business owners, and anyone looking to simplify their financial tracking.
 
-
-## Deployed link:
- - Frontend- [link](https://cashtrackrr.vercel.app/)
- - Backend- [link](https://s54-rajashree-capstone-expense-tracker.vercel.app/)
-
-
+## Technologies used:
+- MongoDB: A flexible NoSQL database for storing data efficiently.
+- Express.js: A robust web application framework for building APIs and web applications.
+- React.js: A dynamic JavaScript library for creating interactive user interfaces.
+- Node.js: A scalable JavaScript runtime environment for building high-performance applications.
+- Daisy UI: Additional UI components for enhancing user experience.
+- Chart.js: Library for creating charts and graphs.
+- 
+## Deployed Links:
+- Frontend: [link](https://cashtrackrr.vercel.app/)
+- Backend: [link](https://s54-rajashree-capstone-expense-tracker.vercel.app/)
 
