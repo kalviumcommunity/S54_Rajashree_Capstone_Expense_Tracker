@@ -35,7 +35,7 @@ CashTrackrr caters to individuals seeking a comprehensive yet user-friendly solu
 - Node.js: A scalable JavaScript runtime environment for building high-performance applications.
 - Daisy UI: Additional UI components for enhancing user experience.
 - Chart.js: Library for creating charts and graphs.
-- 
+  
 ## Deployed Links:
 - Frontend: [link](https://cashtrackrr.vercel.app/)
 - Backend: [link](https://s54-rajashree-capstone-expense-tracker.vercel.app/)
